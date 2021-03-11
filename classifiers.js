@@ -29,6 +29,9 @@ classifier.addDocument(['sell', 'gold'], 'sell');
 
 /* The training process can be monitored by subscribing to the event trainedWithDocument that’s emitted by the classifier, this event’s emitted each time a document is finished being trained against: */
 
+// so i could build functionality around listening for this event
+// something simple like a loader while user uploads data for training purposes
+
 classifier.events.on('trainedWithDocument', obj => {
 	console.log(obj);
 	/*
@@ -37,6 +40,31 @@ classifier.events.on('trainedWithDocument', obj => {
     index: // idx/num of doc that's just been trained against
     doc: {...} the doc that's just been indexed
   }
-
   */
 });
+
+// classifiers can also be persisted and recalled
+// so that you can reuse a training
+
+classifier.save('classifier.json', (err, classifier) => {
+	// the classifier is saved to the classifier.json file
+});
+
+// to recall the saved classifier
+natural.BayesClassifier.load('classifier.json', null, (err, classifier) => {
+	console.log(classifier.classify('long SUNW'));
+	console.log(classifier.classify('short SUNW'));
+});
+
+// classifiers can be serialized/deserialized
+classifier.addDocument(['sell', 'gold'], 'sell');
+classifier.addDocument(['buy', 'silver'], 'buy');
+
+// serialize
+const raw = JSON.stringify(classifier);
+const restoredClassifier = natural.BayesClassifier.restore(JSON.parse(raw));
+console.log(
+	restoredClassifier.classify(
+		'Sales are down this month, but futures are looking good especially on silver'
+	)
+);
