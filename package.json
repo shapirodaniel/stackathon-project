@@ -1,0 +1,16 @@
+{
+  "name": "stackathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "stackathon-notes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "natural": "^4.0.2",
+    "nodemon": "^2.0.7"
+  }
+}
