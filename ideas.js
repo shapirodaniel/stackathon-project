@@ -1,6 +1,6 @@
 /*
 
-  a self-balancing BST is used to maintain a sorted stream of data
+  GOAL: automated production schedule generator with projected labor and output
 
   get the edit distance of user recipe to measure against canonical recipes
   that have known production schedules, and define a conversion factor that will
@@ -78,5 +78,42 @@
   we layer production schedules to maximize labor's output in production
   making sure to minimize collisions with major lifecycle events
   and we return the production schedule as a google calendar / other calender object
+
+  STEP 7
+  user specified production constraints like:
+  max cooler capacity -- the main one for bread: no more room, no more bread!
+  max mixer, oven capacities to measure load/unload timing for oven, full mix/deload time for mixer
+
+  water meter y/n will be used to add a margin of error to calcs
+  since we'll be able to assume the user can't get accurate water temperature?
+
+*/
+
+/*
+
+  user will need an account
+  they will want to store recipes and production schedules
+  and it would be great if they had a way of informing the generator
+  whether the build deviated from what was predicted
+  so that the model could watch out for consistent inaccuracies in its predictions and adjust
+
+  user should also be able to hook into a production calendar with this system
+  so that supply orders can be automated -> this slashes labor as well
+
+
+*/
+
+/*
+
+  additional functionality
+  an invoice management system that alerts a manager
+  when labor requirements will deviate from daily expected values
+  if there is a large order on the horizon
+
+  this will mitigate shortages in ordering as well
+  and have a manual way of overriding automated order scheduling
+  as well as placing orders manually
+
+
 
 */
