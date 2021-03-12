@@ -53,3 +53,14 @@ console.log(tfidf.tfidf('language', 5));
 3.386294361119891 // 2 instances of language
 1.6931471805599454 // 1 instance of language
  */
+
+// it's possible to retrieve a list of all terms in a document sorted by importance
+tfidf.listTerms(0 /* document index */).forEach(item => {
+	console.log(`${item.term}: ${item.tfidf}`);
+});
+
+// a TfIdf instance can be serialized and deserialized for save, recall
+const savedTfIdf = JSON.stringify(tfidf);
+
+// pulled out of storage:
+/* const newTfIdf = new TfIdf(JSON.parse(fetchedTfIdf)); */

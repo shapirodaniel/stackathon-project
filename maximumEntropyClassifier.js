@@ -1,72 +1,75 @@
-// // maximum entropy classifier
-// /*
-//    follows the principle of maximum entropy, which states that the probability distribution that best represents the current state of knowledge is the one with the largest entropy, in the context of precisely stated prior data (such as a proposition that expresses testable information).
+// maximum entropy classifier
+/*
+   follows the principle of maximum entropy, which states that the probability distribution that best represents the current state of knowledge is the one with the largest entropy, in the context of precisely stated prior data (such as a proposition that expresses testable information).
 
-//    from all the models that fit our training data, select the one which has the largest entropy
-//    the distro follows the data it's "seen" but doesn't make assumptions beyond that
-// */
+   from all the models that fit our training data, select the one which has the largest entropy
+   the distro follows the data it's "seen" but doesn't make assumptions beyond that
+*/
 
-// // not specific to nlp or any other application domain
-// // quite free with regard to data structure it can be trained on
-// // for training it needs a sample that consists of elements in two parts:
-// // a: class of the element, b: the context of the element
-// // the classifier will return the most probable class for a particular context
+/* not specific to nlp or any other application domain
+quite free with regard to data structure it can be trained on
+for training it needs a sample that consists of elements in two parts:
 
-// // you must create your own specialization of the Element class
-// // your element class should implement the generateFeatures method for inferring feature functions from the data
-// // this is all pseudocode -- there will need to be actual classes, contexts, samples
+a: class of the element, b: the context of the element
 
-// const MyElement = require('MyElementClass');
-// const Context = require('Context');
-// const Sample = require('Sample');
+the classifier will return the most probable class for a particular context
 
-// const x = new MyElementClass('x', new Context('0'));
+you must create your own specialization of the Element class
+your element class should implement the generateFeatures method for inferring feature functions from the data
+
+this is all pseudocode -- there will need to be actual classes, contexts, samples */
+
+const MyElement = require('MyElementClass');
+const Context = require('Context');
+const Sample = require('Sample');
+
+const x = new MyElementClass('x', new Context('0'));
 
 // // a sample is created from an array of elements
-// const sample = new Sample();
-// sample.addElement(x);
+const sample = new Sample();
+sample.addElement(x);
 
 // // a class is a string
 // // contexts can be as complex as you like as long as it can be serialized
-// sample.save('sample.json', (err, sample) => {
-// 	// do stuff
-// });
-// sample.load('sample.json', MyElement, (err, sample) => {
-// 	// do more stuff
-// });
+sample.save('sample.json', (err, sample) => {
+	// do stuff
+});
+sample.load('sample.json', MyElement, (err, sample) => {
+	// do more stuff
+});
 
 // // features are functions that map elements to 0 or 1
-// const Feature = require('Feature');
+const Feature = require('Feature');
 
-// const findB = input => {
-// 	if (input.b === '0') return 1;
-// 	return 0;
-// };
+const findB = input => {
+	if (input.b === '0') return 1;
+	return 0;
+};
 
-// const feature = new Feature(findB, name, parameters);
-// // name: string for name of feature function
-// // parameters is an array of strings for the params of the feature function
-// // the combination of name and parameters should uniquely distinguish features from each other
-// // features that are added to a feature set are tested for uniqueness using these properties
+const feature = new Feature(findB, name, parameters);
+// name: string for name of feature function
+// parameters is an array of strings for the params of the feature function
+// the combination of name and parameters should uniquely distinguish features from each other
+// features that are added to a feature set are tested for uniqueness using these properties
 
-// // create a feature set like this
-// const FeatureSet = require('FeatureSet');
-// const set = new FeatureSet();
-// set.addFeature(findB, 'findB', ['0']);
+// create a feature set like this
+const FeatureSet = require('FeatureSet');
+const set = new FeatureSet();
+set.addFeature(findB, 'findB', ['0']);
 
-// // in most casees feature functions are generated with closures
-// // ex., generate feature functions in a loop that iterates an array
-// const listOfTags = ['NN', 'DET', 'PREP', 'ADJ'];
-// const featureSet = new FeatureSet();
+// in most casees feature functions are generated with closures
+// ex., generate feature functions in a loop that iterates an array
+const listOfTags = ['NN', 'DET', 'PREP', 'ADJ'];
+const featureSet = new FeatureSet();
 
-// listOfTags.forEach(tag => {
-// 	const isTag = input => {
-// 		if (input.b.data.tag === tag) return 1;
-// 		return 0;
-// 	};
+listOfTags.forEach(tag => {
+	const isTag = input => {
+		if (input.b.data.tag === tag) return 1;
+		return 0;
+	};
 
-// 	featureSet.addFeature(new Feature(isTag, 'isTag', ['tag']));
-// });
+	featureSet.addFeature(new Feature(isTag, 'isTag', ['tag']));
+});
 
 /*
   classifier needs the following parameter
@@ -75,28 +78,28 @@
   Sample: a sample of elements for training the classifier
 */
 
-// const Classifier = require('Classifier');
-// const classifier = new Classifier(classes, featureSet, sample);
+const Classifier = require('Classifier');
+const classifier = new Classifier(classes, featureSet, sample);
 
 /* start training with: */
-// const maxIterations = 100;
-// const minImprovement = .01;
-// const model = classifier.train(maxIterations, minImprovement);
+const maxIterations = 100;
+const minImprovement = 0.01;
+const model = classifier.train(maxIterations, minImprovement);
 
 /* training is finished when either maxIterations is reached or the improvement in likelihood (of the sample) becomes smaller than minImprovement -- it returns a probability distro that can be stored/retrieved */
-// classifier.save('classifier.json', (err, c) => {
-// 	if (err) console.log(err);
-// 	else {
-// 		/* continue using classifier */
-// 	}
-// });
+classifier.save('classifier.json', (err, c) => {
+	if (err) console.log(err);
+	else {
+		/* continue using classifier */
+	}
+});
 
-// classifier.load('classifier.json', (err, c) => {
-// 	if (err) console.log(err);
-// 	else {
-// 		/* use the classifier */
-// 	}
-// });
+classifier.load('classifier.json', (err, c) => {
+	if (err) console.log(err);
+	else {
+		/* use the classifier */
+	}
+});
 
 // training algo is based on Generalized Iterative Scaling
 // in a nutshell:
@@ -131,9 +134,6 @@
 
   weight := weight * ((sum of freq of labeledText in corpus * labeledText) * featureDetector(labeledText)) / (sum to num labeledTexts of classifier's estimated labeledText probability * featureDetector(labeledText)) ^ (1 / (Correction constant (C)))
 
-  since this is costly, we can approximate:
-
-  sum of
 */
 
 // applying the classifier
