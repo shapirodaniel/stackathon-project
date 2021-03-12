@@ -33,3 +33,54 @@ to a lesser extent these classes will also affect timetables
 
 7. fats: generally slow fermentation when they reach a certain bp
 8. inclusions: if they're not strongly hygroscopic, water and whole-grain content (and any salt) will be the main factors -- so we can consider the effect of inclusions on production as a reflection of the macro qualities noted above (water, salt, type of flour) and use the bp of the inclusion to quantify how it will likely affect fermentation
+
+### classes for quantifying ingredient impact on production
+
+flour
+liquid
+salt
+yeast
+preferment
+sweetener
+inclusion
+
+### next steps
+
+figure out a projected production schedule and fermentation activity curve for each canonical recipe
+
+define functions that modify the projected schedule and fermentation curve based on (ingredient) class deviations
+
+define task-hours per production lifecycle event
+
+define an algorithm that will "sort" my production schedule --> shouldn't be too bad, it will just need to place task-blocks in the most efficient way possible within a given schedule
+
+### user interface
+
+-users should have access to the dynamic baker's math calculator
+
+-users should have a trove of recipes that can be loaded into a given production schedule
+
+-users' recipes should be CONNECTED to the production schedule: changes in the recipe will affect production!
+
+-users should be able to set a desired labor number INDEPENDENT of an actual schedule -- this will encourage users to think about production not in terms of bodies on the floor but rather the production pipeline and ITS needs
+
+-users should be able to use a slider to add/remove labor hours to/from a given production schedule
+
+-users should be able to define what PERCENTAGE of available labor will be wholly devoted to the production schedule so that maintenance, prep, and receiving tasks are accounted for -- example, if the user knows that the kitchen staff will be required to spend x task-hours on y unrelated task to production the schedule will be built to reflect these constraints
+
+### eventually ...
+
+-user inputted recipes should be used as training data for a classifier, so that recipes can be more finely sifted and identified
+
+-users should be alerted when strong deviations from canonicals will result in poor production schedule builds, and users should receive suggestions on how to update a recipe to maximize output
+
+THIS is where it gets tricky
+assuming users can stand the idea of ai suggesting recipe tweaks, they'll need to be able to abandon their idea of how production should work, and some changes like switching to a completely different levain build will be quite radical
+
+-users should be able to ask "how could i improve sales, cut labor, compress or expand the production timeline of x product?" and get a quantifiable answer that demonstrates how recipe adjustments will impact production schedules, and what affect the new production schedule will have on cogs, labor, net revenue. these metrics should be charted and displayed in comparison format to show short and long term benefits
+
+-users who trust the platform should be able to click a button that says "optimize my production schedule" and get a log of proposed changes to recipes that will maximize production output and minimize labor
+
+-users should be able to generate production schedules at least 2 pay periods out to be able to schedule labor as efficiently as possible
+
+-users should be able to "hook" into these generated production schedules and pipe results in a useful way to their inventory management system -- or, if they don't have one, the platform should offer suggested ordering patterns
