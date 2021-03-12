@@ -1,6 +1,25 @@
 const preferments = require('./preferment');
 const { seedSoaker } = require('./soaker');
 
+module.exports = {
+	painDeCampagne,
+	brioche,
+	milkBread,
+	englishMuffin,
+	rye,
+	wholeWheat,
+	pizza,
+	ciabatta,
+	focaccia,
+	painDeMie,
+	multigrain,
+	pretzel,
+	bagel,
+	challah,
+	cinnamonPotato,
+	generic,
+};
+
 // define conversion factor for commercial yeasts
 /*
  * 1 fresh yeast = .4 ADY
