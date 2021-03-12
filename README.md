@@ -27,6 +27,9 @@ the key classes that will affect production schedules are
 3. preferment: more preferment, faster fermentation
 4. salt: more salt, slower fermentation
 5. type of flour: more whole grain, faster fermentation
-6. hygroscopic ingredients: including sugar and any dessicants like inclusions with dried fruits and nuts -- these will heavily impact fermentation if appropriate amounts of liquid aren't added
+6. hygroscopic ingredients: including sugar and any dessicants like inclusions with dried fruits and nuts -- these will heavily impact fermentation if appropriate amounts of liquid aren't added to compensate -- we should expect higher liquid bp when these sorts of inclusions are added -- this leaves out the class of soakers, a subclass of inclusions, which are overhydrated to compensate
 
-to a lesser extent these classes will also affect timetables 7. fats: generally slow fermentation when they reach a certain bp 8. inclusions: if they're not strongly hygroscopic, water and whole-grain content (and any salt) will be the main factors -- so we can consider the effect of inclusions on production as a reflection of the macro qualities noted above (water, salt, type of flour) and use the bp of the inclusion to quantify how it will likely affect fermentation
+to a lesser extent these classes will also affect timetables
+
+7. fats: generally slow fermentation when they reach a certain bp
+8. inclusions: if they're not strongly hygroscopic, water and whole-grain content (and any salt) will be the main factors -- so we can consider the effect of inclusions on production as a reflection of the macro qualities noted above (water, salt, type of flour) and use the bp of the inclusion to quantify how it will likely affect fermentation
