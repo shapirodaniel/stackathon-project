@@ -4,6 +4,14 @@
 
 # topic: nlp-based ai for generating bakery production schedules according to recipe builds
 
+### in a nutshell:
+
+this system brings agile methodology to the kitchen to solve the age-old problem of how to minimize labor and maximize output while holding production quality steady WITHOUT overstressing labor -- these are THE key performance indicators for the likely success of a bakery
+
+bakeries operate on terrible margins -- 6% profit year-over-year, 96% mid-week labor percentage, and rampant waste/loss of product make it highly unlikely that a bakery will survive the first two years of existence
+
+the easiest way to make money is to save money. calories in, calories out -- the profitability and stability of a bakery is directly correlated to its ability to maximize production and minimize labor. everything else is window-dressing -- you can market all you want but your customer retention will be terrible if you can't produce high-quality goods profitably and consistently.
+
 ### what problems does this system solve?
 
 keeps kitchen from being caught flat-footed on large orders that disrupt the "usual" flow of production
@@ -12,7 +20,7 @@ keeps kitchen from experiencing bottlenecks in production by limiting collisions
 
 ### how does this system improve production that isn't experiencing problems?
 
-oftentimes kitchens get into a groove and fail to maximize the productive capacity of their space and labor since everyone is comfortable -- the metrics this system provides allow the head baker to create reasonable expectations of productivity and allow for reasonable assumptions about labor and COGS, and will help the head baker identify low-revenue high-labor items to redline
+oftentimes kitchens fail to maximize the productive capacity of their space and labor since everyone is comfortable with "the way things work here" -- the metrics this system provides allow the head baker to create reasonable expectations of productivity and allow for reasonable assumptions about labor and COGS, and will help the head baker identify low-revenue high-labor items to redline, low-productivity laborers to address, high-performing laborers who will be able to create greater output on the same number of assigned task-hours
 
 ### how is this going to work from a technical perspective?
 
@@ -88,3 +96,7 @@ define an algorithm that will "sort" my production schedule --> shouldn't be too
 -users should be able to generate production schedules at least 2 pay periods out to be able to schedule labor as efficiently as possible
 
 -users should be able to "hook" into these generated production schedules and pipe results in a useful way to their inventory management system -- or, if they don't have one, the platform should offer suggested ordering patterns
+
+### even more eventually ...
+
+-user inputted reactions to production builds' "correctness" should be gathered in order to inform the time-temperature model that are used to create projected production schedules
