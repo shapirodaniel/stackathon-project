@@ -72,14 +72,18 @@ define an algorithm that will "sort" my production schedule --> shouldn't be too
 
 -user inputted recipes should be used as training data for a classifier, so that recipes can be more finely sifted and identified
 
+-users should be able to override suggested task-hours for a given production task and assert their own
+
+-users should be able to clearly state what time and temperature production will take place at, so that production builds can be adjusted to reflect these factors -- these should be sliders or easily-manipulated text fields
+
 -users should be alerted when strong deviations from canonicals will result in poor production schedule builds, and users should receive suggestions on how to update a recipe to maximize output
 
-THIS is where it gets tricky
-assuming users can stand the idea of ai suggesting recipe tweaks, they'll need to be able to abandon their idea of how production should work, and some changes like switching to a completely different levain build will be quite radical
+`THIS is where it gets tricky`
+-assuming users can stand the idea of ai suggesting recipe tweaks, they'll need to be able to abandon their idea of how production should work, and some changes like switching to a completely different levain build will be quite radical
 
 -users should be able to ask "how could i improve sales, cut labor, compress or expand the production timeline of x product?" and get a quantifiable answer that demonstrates how recipe adjustments will impact production schedules, and what affect the new production schedule will have on cogs, labor, net revenue. these metrics should be charted and displayed in comparison format to show short and long term benefits
 
--users who trust the platform should be able to click a button that says "optimize my production schedule" and get a log of proposed changes to recipes that will maximize production output and minimize labor
+-users who trust the platform should be able to click a button that says "optimize my production schedule" and get a log of proposed changes to recipes that will maximize production output and minimize labor, when they click the button those changes are committed and a history of revisions is held so that users can revisit earlier production builds and get a kitchen history for auditing production efficiency and tradeoffs
 
 -users should be able to generate production schedules at least 2 pay periods out to be able to schedule labor as efficiently as possible
 
