@@ -1,5 +1,5 @@
 /////////////////////////////////
-/* --- SET UP CLASSIFIERS ---- */
+/* ---- SET UP CLASSIFIER ---- */
 /////////////////////////////////
 
 // require the main library
@@ -22,18 +22,6 @@ for (corpus of corpii) {
 }
 // train the classifier
 ingredientClassifier.train();
-
-// the classifier can be saved for recall and further training
-ingredientClassifier.save('ingredientClassifier.json', (err, classifier) => {
-	if (err) return console.error(err);
-	else return classifier;
-});
-
-// the classifier can also be serialized/deserialized if need be
-const rawIngredientClassifier = JSON.stringify(ingredientClassifier);
-const restoredIngredientClassifier = natural.BayesClassifier.restore(
-	JSON.parse(rawIngredientClassifier)
-);
 
 // after calling getIngredients(userInput), myIngredientsList is a list of objs structured: [{ name: weight }, ...]
 const myIngredientList = [
@@ -137,9 +125,9 @@ const convertToBakersMath = classifiedRecipe => {
 };
 const bpConvertedClassifiedRecipe = convertToBakersMath(myClassifiedRecipe);
 
-/////////////////////////////////////////
-/* --- RECIPE CONVERSION COMPLETE ---- */
-/////////////////////////////////////////
+//////////////////////////////////////////
+/* ---- RECIPE CONVERSION COMPLETE ---- */
+//////////////////////////////////////////
 
 // next compare user recipe to canonicals
 // require the canonicals and sub-classifiers
