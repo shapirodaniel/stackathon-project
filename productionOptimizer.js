@@ -66,3 +66,9 @@
 // temperature curve: 20-30C, +1C temp bumps activity by 7%
 
 // alcohol +12% bp, slows fermentation
+
+/* about pH */
+// pH is a ten-fold measurement of H+ concentration
+// we ignore pH effects until the projected initial pH > 7 || < 4.5
+// > 7 === many basic additions, probably too much dairy and basic inclusions
+// < 4.5 === many acidic additions, probably too much whole grain (particularly rye), too much preferment, or added alcohol like a spent-grain bread + beer
