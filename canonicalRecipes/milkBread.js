@@ -1,3 +1,5 @@
+const { yudane } = require('./preferments');
+
 const milkBread = {
 	flour: [
 		{
@@ -33,7 +35,7 @@ const milkBread = {
 		{
 			name: 'yudane',
 			bp: 45,
-			recipe: preferments.yudane,
+			recipe: yudane,
 		},
 	],
 };

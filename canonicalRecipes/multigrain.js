@@ -1,3 +1,5 @@
+const { levain24Hr } = require('./preferments');
+const { seedSoaker } = require('./inclusions');
 const multigrain = {
 	flour: [
 		{
@@ -33,6 +35,7 @@ const multigrain = {
 		{
 			name: 'levain',
 			bp: 20,
+			recipe: levain24Hr,
 		},
 	],
 	inclusion: [

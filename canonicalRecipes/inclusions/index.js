@@ -1,3 +1,3 @@
-const soaker = require('./soaker');
+const seedSoaker = require('./seedSoaker');
 
-module.exports = { soaker };
+module.exports = { seedSoaker };

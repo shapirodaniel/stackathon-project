@@ -20,4 +20,4 @@ const seedSoaker = {
 	],
 };
 
-module.exports = { seedSoaker };
+module.exports = seedSoaker;

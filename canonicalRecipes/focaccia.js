@@ -1,3 +1,5 @@
+const { poolish24Hr } = require('./preferments');
+
 const focaccia = {
 	flour: [
 		{
@@ -27,7 +29,7 @@ const focaccia = {
 			bp: 0.75,
 		},
 	],
-	preferment: [{ name: 'poolish', bp: 5, recipe: preferments.poolish }],
+	preferment: [{ name: 'poolish', bp: 5, recipe: poolish24Hr }],
 };
 
 module.exports = focaccia;

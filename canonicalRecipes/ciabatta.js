@@ -1,3 +1,5 @@
+const { biga12Hr } = require('./preferments');
+
 const ciabatta = {
 	flour: [
 		{
@@ -38,7 +40,7 @@ const ciabatta = {
 		{
 			name: 'biga',
 			bp: 100,
-			recipe: preferments.biga,
+			recipe: biga12Hr,
 		},
 	],
 };

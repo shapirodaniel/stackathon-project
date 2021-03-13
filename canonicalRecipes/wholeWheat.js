@@ -1,3 +1,5 @@
+const { poolish24Hr } = require('./preferments');
+
 const wholeWheat = {
 	flour: [
 		{
@@ -37,6 +39,7 @@ const wholeWheat = {
 		{
 			name: 'poolish',
 			bp: 5,
+			recipe: poolish24Hr,
 		},
 	],
 };

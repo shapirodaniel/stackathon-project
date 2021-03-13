@@ -1,3 +1,5 @@
+const { levain24Hr } = require('./preferments');
+
 const countrySour = {
 	flour: [
 		{
@@ -28,6 +30,7 @@ const countrySour = {
 		{
 			name: 'levain',
 			bp: 15,
+			recipe: levain24Hr,
 		},
 	],
 };
