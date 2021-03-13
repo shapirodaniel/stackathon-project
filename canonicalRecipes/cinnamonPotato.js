@@ -29,8 +29,8 @@ const cinnamonPotato = {
 	],
 	yeast: [
 		{
-			name: 'instant',
-			bp: 2.325,
+			name: 'fresh',
+			bp: 7,
 		},
 	],
 	sweetener: [

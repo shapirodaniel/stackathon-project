@@ -23,8 +23,9 @@ for (corpus of corpii) {
 ingredientClassifier.train();
 
 // the classifier can be saved for recall and further training
-ingredientClassifier.save('ingredientClassifier.json', err => {
+ingredientClassifier.save('ingredientClassifier.json', (err, classifier) => {
 	if (err) return console.error(err);
+	else return classifier;
 });
 
 // it can also be serialized/deserialized (if we need it)
@@ -86,22 +87,23 @@ const myClassifiedRecipe = classifyRecipe(myIngredientList);
 
 // first, convert weights to bp
 const convertToBakersMath = classifiedRecipe => {
+	// get total flour weight
 	const totalFlour = classifiedRecipe.flour.reduce(
 		(sum, ingredient) => sum + Object.values(ingredient)[0],
 		0
 	);
 
-	// loop through classifiedRecipe's ingredient classes
+	// loop through the classifiedRecipe
 	// mutate in place by replacing each ingredient object
-	// { name: weight } with { name: name, bp: bp }
-	// here, we need to be able to assume that unit conversion is done and all weights are in grams
+	// { name: weight } -> { name: name, bp: bp }
+	// assume all weights in grams (that conversion from other units has already taken place)
 	for (ingredientClass in classifiedRecipe) {
 		const listOfIngredients = classifiedRecipe[ingredientClass];
 
 		const bpConvertedList = listOfIngredients.map(ingredient => {
 			const name = Object.keys(ingredient)[0];
 
-			const bp = (ingredient[name] / totalFlour).toFixed(2);
+			const bp = ((ingredient[name] / totalFlour) * 100).toFixed(2);
 
 			return { name: name, bp: bp };
 		});
@@ -114,12 +116,14 @@ const convertToBakersMath = classifiedRecipe => {
 const bpConvertedClassifiedRecipe = convertToBakersMath(myClassifiedRecipe);
 
 // second, match by absence/presence of ingredientClasses: ex., this will allow us to discard all the enriched doughs if the user recipe doesn't contain any ingredients that classify as egg/dairy
+// after sifting canonical models to arrive at a few candidates, measure the edit distance of ingredient names from canonical ingredient names and select the model that minimizes edit distance
 const canonicals = require('../canonicalRecipes');
 
-// after sifting canonical models to arrive at a few candidates, measure the edit distance of ingredient names from canonical ingredient names and select the model that minimizes edit distance
 const findCanonicalRecipeMatches = classifiedRecipe => {
 	// assign a similarity score for each of the following steps:
-	// step 1: see how many ingredients there are per class
+	// step 1: get the canonicals that have the same classes
+	// in this step, weight inclusions, preferments, dries less, as they'll be ubiquitous across recipes
+	// step 2: see how many ingredients there are per class
 	// step 2: compare ingredient bp's within the class
 	// step 3: ???
 	// step 4: profit -> return an array of matches and let the user decide if there isn't a statistically-significant choice, otherwise return a match

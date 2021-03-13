@@ -21,8 +21,8 @@ const pizza = {
 	],
 	yeast: [
 		{
-			name: 'instant',
-			amount: 0.075,
+			name: 'fresh',
+			amount: 0.25,
 		},
 	],
 };

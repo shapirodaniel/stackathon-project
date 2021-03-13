@@ -23,8 +23,8 @@ const ciabatta = {
 	],
 	yeast: [
 		{
-			name: 'active dry',
-			bp: 0.55,
+			name: 'fresh',
+			bp: 0.6875,
 		},
 	],
 

@@ -14,8 +14,8 @@ const milkBread = {
 	],
 	yeast: [
 		{
-			name: 'instant',
-			bp: 1.5,
+			name: 'fresh',
+			bp: 4.5,
 		},
 	],
 	dairy: [

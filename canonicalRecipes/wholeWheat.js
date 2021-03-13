@@ -23,8 +23,8 @@ const wholeWheat = {
 	],
 	yeast: [
 		{
-			name: 'instant',
-			bp: 0.25,
+			name: 'fresh',
+			bp: 0.75,
 		},
 	],
 	sweetener: [

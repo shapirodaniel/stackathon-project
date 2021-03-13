@@ -34,6 +34,9 @@ module.exports = {
 	generic,
 };
 
+// convert yeast on the frontend with a conversion factor
+// all yeast will be in fresh yeast quantities
+
 // define conversion factor for commercial yeasts
 /*
  * 1 fresh yeast = .4 ADY

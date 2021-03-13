@@ -24,8 +24,8 @@ const challah = {
 	],
 	yeast: [
 		{
-			name: 'instant',
-			bp: 1,
+			name: 'fresh',
+			bp: 3.33,
 		},
 	],
 	sweetener: [
