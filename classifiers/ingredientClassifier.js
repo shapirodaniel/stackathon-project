@@ -1,25 +1,22 @@
+// require the main library
 const natural = require('natural');
 
 // define a bayesian classifier for ingredients
 const ingredientClassifier = new natural.BayesClassifier();
 
 // require the corpuses that will be used to train the classifier
-// flour, liquid, yeast, sweetener, egg, inclusion -- ex.,
-const corpii = {
-	flourCorpus, // each an obj: { flour: flourCorpus }
-	liquidCorpus,
-	yeastCorpus,
-	sweetenerCorpus,
-	eggCorpus,
-	inclusionCorpus,
-};
+const corpii = require('../training-data');
 
 // train the classifier
 // addDocument() takes a corpus: array of strings, and a class: string
 for (corpus of corpii) {
+	// get the class from the corpus key
 	const ingredientClass = Object.keys(corpus)[0];
+
+	// add the corpus's training data to the classifier
 	ingredientClassifier.addDocument(corpus[ingredientClass], ingredientClass);
 }
+// train the classifier
 ingredientClassifier.train();
 
 // the classifier can be saved for recall and further training
@@ -28,14 +25,13 @@ ingredientClassifier.save('ingredientClassifier.json', (err, classifier) => {
 	else return classifier;
 });
 
-// it can also be serialized/deserialized (if we need it)
+// the classifier can also be serialized/deserialized if need be
 const rawIngredientClassifier = JSON.stringify(ingredientClassifier);
 const restoredIngredientClassifier = natural.BayesClassifier.restore(
 	JSON.parse(rawIngredientClassifier)
 );
 
-// after calling getIngredients(userInput), myIngredientsList is a list of objs structured:
-// [{ name: weight }, ...]
+// after calling getIngredients(userInput), myIngredientsList is a list of objs structured: [{ name: weight }, ...]
 const myIngredientList = [
 	{ 'bread flour': 35 },
 	{ 'ap flour': 30 },
@@ -82,8 +78,7 @@ const classifyRecipe = ingredients => {
 };
 const myClassifiedRecipe = classifyRecipe(myIngredientList);
 
-// next we'll find the canonical model that matches myClassifiedRecipe
-// this will be a multi-pronged step:
+// next we'll find the canonical model that matches myClassifiedRecipe -- this will be a multi-pronged step:
 
 // first, convert weights to bp
 const convertToBakersMath = classifiedRecipe => {
@@ -98,40 +93,31 @@ const convertToBakersMath = classifiedRecipe => {
 	// { name: weight } -> { name: name, bp: bp }
 	// assume all weights in grams (that conversion from other units has already taken place)
 	for (ingredientClass in classifiedRecipe) {
+		// assign the class array to listOfIngredients
 		const listOfIngredients = classifiedRecipe[ingredientClass];
 
+		// convert each ingredient weight to a baker's percentage
 		const bpConvertedList = listOfIngredients.map(ingredient => {
+			// ingredientClass is the object's key
 			const name = Object.keys(ingredient)[0];
 
-			const bp = ((ingredient[name] / totalFlour) * 100).toFixed(2);
+			// baker's percentage is a fixed-decimal number
+			const bp = +((ingredient[name] / totalFlour) * 100).toFixed(2);
 
+			// the new ingredient object
 			return { name: name, bp: bp };
 		});
 
+		// replace the clasifiedRecipe value with the new list
 		classifiedRecipe[ingredientClass] = bpConvertedList;
 	}
-
 	return classifiedRecipe;
 };
 const bpConvertedClassifiedRecipe = convertToBakersMath(myClassifiedRecipe);
 
-// second, match by absence/presence of ingredientClasses: ex., this will allow us to discard all the enriched doughs if the user recipe doesn't contain any ingredients that classify as egg/dairy
-// after sifting canonical models to arrive at a few candidates, measure the edit distance of ingredient names from canonical ingredient names and select the model that minimizes edit distance
+// next compare user recipe to canonicals
+// require the canonicals and sub-classifiers
 const canonicals = require('../canonicalRecipes');
-
-const findCanonicalRecipeMatches = classifiedRecipe => {
-	// assign a similarity score for each of the following steps:
-	// step 1: get the canonicals that have the same classes
-	// in this step, weight inclusions, preferments, dries less, as they'll be ubiquitous across recipes
-	// step 2: see how many ingredients there are per class
-	// step 2: compare ingredient bp's within the class
-	// step 3: ???
-	// step 4: profit -> return an array of matches and let the user decide if there isn't a statistically-significant choice, otherwise return a match
-};
-
-// next we'll need to more finely sift ingredients by sub-classifying them to get "scores" that will affect the big quantification metrics for an ingredientClass -- for example, flours should be roughly classified as white or whole grain, and whole grain should be divided into wheats and ryes
-
-// require the sub-classifiers
 const {
 	flourClassifier,
 	liquidClassifier,
@@ -142,8 +128,6 @@ const {
 } = require('./subClassifiers');
 
 const getIngredientSubclass = (ingredient, ingredientClass) => {
-	// train sub-classifiers for each ingredientClass, then switch on ingredientClass and get the sub-class for each ingredient
-
 	const { name } = ingredient;
 
 	switch (ingredientClass) {
@@ -172,12 +156,3 @@ const getIngredientSubclass = (ingredient, ingredientClass) => {
 };
 
 // do the minimal amount of sifting necessary to be able to quantify the overall affect of having more or less of one kind of flour than the canonical model specifies -- for instance, we should expect a country sour that swaps the proportions of wheat and rye to ferment a good deal faster, so we should be able to quantify the effect of having more rye than the canonical model at each of the "dough at rest" stages (the fermentation stages)
-
-// define sub-classifiers and get the metric for each ingredientClass as a sum of the weighted scores of all sub-classified ingredients, where a weighted score is:
-
-/*
-
-  ex., flours: [{name: 'bread', weight: 100}]
-
-
-*/
