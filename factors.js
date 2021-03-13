@@ -46,6 +46,10 @@ const yeastMotility = (convertedRecipe, canonicalRecipe) => {
 // yeast concentration tracks how much yeast will be present in the dough
 // directly affected by amount of yeast used and preferments and their initial starter bp's
 
+// yeast concentration depends on the following factors:
+// yeast -- more yeast raises yeast concentration
+// preferments -- more preferments raises yeast concentration
+
 const yeastConcentration = (convertedRecipe, canonicalRecipe) => {
 	// identify classes/subclasses that affect yeast concentration
 	// sum deviations
