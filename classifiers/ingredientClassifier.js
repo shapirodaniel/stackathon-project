@@ -84,10 +84,46 @@ const myClassifiedRecipe = classifyRecipe(myIngredientList);
 // next we'll find the canonical model that matches myClassifiedRecipe
 // this will be a multi-pronged step:
 
-// first match by absence/presence of ingredientClasses: ex., this will allow us to discard all the enriched doughs if the user recipe doesn't contain any ingredients that classify as egg/dairy
+// first, convert weights to bp
+const convertToBakersMath = classifiedRecipe => {
+	const totalFlour = classifiedRecipe.flour.reduce(
+		(sum, ingredient) => sum + Object.values(ingredient)[0],
+		0
+	);
+
+	// loop through classifiedRecipe's ingredient classes
+	// mutate in place by replacing each ingredient object
+	// { name: weight } with { name: name, bp: bp }
+	// here, we need to be able to assume that unit conversion is done and all weights are in grams
+	for (ingredientClass in classifiedRecipe) {
+		const listOfIngredients = classifiedRecipe[ingredientClass];
+
+		const bpConvertedList = listOfIngredients.map(ingredient => {
+			const name = Object.keys(ingredient)[0];
+
+			const bp = (ingredient[name] / totalFlour).toFixed(2);
+
+			return { name: name, bp: bp };
+		});
+
+		classifiedRecipe[ingredientClass] = bpConvertedList;
+	}
+
+	return classifiedRecipe;
+};
+const bpConvertedClassifiedRecipe = convertToBakersMath(myClassifiedRecipe);
+
+// second, match by absence/presence of ingredientClasses: ex., this will allow us to discard all the enriched doughs if the user recipe doesn't contain any ingredients that classify as egg/dairy
 const canonicals = require('../canonicalRecipes');
 
 // after sifting canonical models to arrive at a few candidates, measure the edit distance of ingredient names from canonical ingredient names and select the model that minimizes edit distance
+const findCanonicalRecipeMatches = classifiedRecipe => {
+	// assign a similarity score for each of the following steps:
+	// step 1: see how many ingredients there are per class
+	// step 2: compare ingredient bp's within the class
+	// step 3: ???
+	// step 4: profit -> return an array of matches and let the user decide if there isn't a statistically-significant choice, otherwise return a match
+};
 
 // next we'll need to more finely sift ingredients by sub-classifying them to get "scores" that will affect the big quantification metrics for an ingredientClass -- for example, flours should be roughly classified as white or whole grain, and whole grain should be divided into wheats and ryes
 
