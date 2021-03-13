@@ -123,7 +123,7 @@ const convertToBakersMath = classifiedRecipe => {
 	}
 	return classifiedRecipe;
 };
-const bpConvertedClassifiedRecipe = convertToBakersMath(myClassifiedRecipe);
+const convertedRecipe = convertToBakersMath(myClassifiedRecipe);
 
 //////////////////////////////////////////
 /* ---- RECIPE CONVERSION COMPLETE ---- */
@@ -133,4 +133,9 @@ const bpConvertedClassifiedRecipe = convertToBakersMath(myClassifiedRecipe);
 // require the canonicals and sub-classifiers
 const canonicals = require('../canonicalRecipes');
 
-// do the minimal amount of sifting necessary to be able to quantify the overall affect of having more or less of one kind of flour than the canonical model specifies -- for instance, we should expect a country sour that swaps the proportions of wheat and rye to ferment a good deal faster, so we should be able to quantify the effect of having more rye than the canonical model at each of the "dough at rest" stages (the fermentation stages)
+// do the minimal amount of sifting necessary to be able to quantify the overall affect of having more or less of one kind of ingredient than the canonical model specifies -- for instance, we should expect a country sour that swaps the proportions of wheat and rye to ferment a good deal faster, so we should be able to quantify the effect of having more rye than the canonical model at each of the "dough at rest" stages (the fermentation stages)
+
+// most factors can be evaluated purely by comparing baker's math in the convertedRecipe to the canonical recipe
+// those that differ qualitatively need to have their effects measured and silo'd and applied to the full production schedule calculation
+
+// for example, if the user recipe is an up/down match to a canonical in all top-level ingredientClass comparisons -- eg hydration as a function of total flour and liquids -- the subclasses will be the differentiators
