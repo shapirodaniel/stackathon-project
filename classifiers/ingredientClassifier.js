@@ -3,9 +3,8 @@ const natural = require('natural');
 // define a bayesian classifier for ingredients
 const ingredientClassifier = new natural.BayesClassifier();
 
-// train the classifier to recognize the main classes affecting production schedule outcomes (most of the generic canonical recipe template fields):
+// require the corpuses that will be used to train the classifier
 // flour, liquid, yeast, sweetener, egg, inclusion -- ex.,
-
 const corpii = {
 	flourCorpus, // each an obj: { flour: flourCorpus }
 	liquidCorpus,
@@ -15,10 +14,24 @@ const corpii = {
 	inclusionCorpus,
 };
 
+// train the classifier
+// addDocument() takes a corpus: array of strings, and a class: string
 for (corpus of corpii) {
 	const ingredientClass = Object.keys(corpus)[0];
 	ingredientClassifier.addDocument(corpus[ingredientClass], ingredientClass);
 }
+ingredientClassifier.train();
+
+// the classifier can be saved for recall and further training
+ingredientClassifier.save('ingredientClassifier.json', err => {
+	if (err) return console.error(err);
+});
+
+// it can also be serialized/deserialized (if we need it)
+const rawIngredientClassifier = JSON.stringify(ingredientClassifier);
+const restoredIngredientClassifier = natural.BayesClassifier.restore(
+	JSON.parse(rawIngredientClassifier)
+);
 
 // after calling getIngredients(userInput), myIngredientsList is a list of objs structured:
 // [{ name: weight }, ...]
@@ -66,13 +79,13 @@ const classifyRecipe = ingredients => {
 		return classifiedRecipe;
 	}, {});
 };
-
 const myClassifiedRecipe = classifyRecipe(myIngredientList);
 
 // next we'll find the canonical model that matches myClassifiedRecipe
 // this will be a multi-pronged step:
 
 // first match by absence/presence of ingredientClasses: ex., this will allow us to discard all the enriched doughs if the user recipe doesn't contain any ingredients that classify as egg/dairy
+const canonicals = require('../canonicalRecipes');
 
 // after sifting canonical models to arrive at a few candidates, measure the edit distance of ingredient names from canonical ingredient names and select the model that minimizes edit distance
 
