@@ -58,6 +58,20 @@ const myIngredientList = [
     ...
   }
 */
+
+// next, we'll need to subclass any ingredient that has a corresponding sub-classifier -- start by requiring the sub-classifiers
+const {
+	flourClassifier,
+	liquidClassifier,
+	yeastClassifier,
+	eggClassifier,
+	sweetenerClassifier,
+	inclusionClassifier,
+	getIngredientSubclass,
+} = require('./sub-classifiers');
+
+// next, run the classifiedRecipe through the meat grinder
+
 const classifyRecipe = ingredients => {
 	// reduce ingredients list to generated classifiedRecipe
 	// an object that has the generic template categories
@@ -70,7 +84,13 @@ const classifyRecipe = ingredients => {
 		// get ingredient class from name
 		const ingredientClass = ingredientClassifier.classify(name);
 
-		// sub-class as necessary with a subclass helper
+		// sub-class as necessary with a getIngredientSubclass helper
+		// sub-classes only affect their parent class (this simplifies the model that quantifies deviation effects)
+		// getIngredientSubclass() returns an array of subclasses
+		const subclasses = getIngredientSubclass(ingredient, ingredientClass);
+
+		// assign subclasses array to ingredient
+		ingredient.subclasses = subclasses;
 
 		// either add the ingredient to the class array on the classifiedRecipe object or, if the class doesn't yet exist, add a new key with a value of [ {...ingredient} ]
 		classifiedRecipe[ingredientClass]
@@ -81,8 +101,6 @@ const classifyRecipe = ingredients => {
 	}, {});
 };
 const myClassifiedRecipe = classifyRecipe(myIngredientList);
-
-// next we'll find the canonical model that matches myClassifiedRecipe -- this will be a multi-pronged step:
 
 // first, convert weights to bp
 const convertToBakersMath = classifiedRecipe => {
@@ -126,41 +144,5 @@ const bpConvertedClassifiedRecipe = convertToBakersMath(myClassifiedRecipe);
 // next compare user recipe to canonicals
 // require the canonicals and sub-classifiers
 const canonicals = require('../canonicalRecipes');
-const {
-	flourClassifier,
-	liquidClassifier,
-	yeastClassifier,
-	eggClassifier,
-	sweetenerClassifier,
-	inclusionClassifier,
-} = require('./sub-classifiers');
-
-const getIngredientSubclass = (ingredient, ingredientClass) => {
-	const { name } = ingredient;
-
-	switch (ingredientClass) {
-		case 'flour':
-			return flourClassifier.classify(name);
-
-		case 'liquid':
-			return liquidClassifier.classify(name);
-
-		case 'yeast':
-			return yeastClassifier.classify(name);
-
-		case 'egg':
-			return eggClassifier.classify(name);
-
-		case 'sweetener':
-			return sweetenerClassifier.classify(name);
-
-		case 'inclusion':
-			return inclusionClassifier.classify(name);
-
-		// return empty string by default, which will allow us to ignore non-sub-classified ingredient effects later on, by only considering sub-classes with a length > 0
-		default:
-			return '';
-	}
-};
 
 // do the minimal amount of sifting necessary to be able to quantify the overall affect of having more or less of one kind of flour than the canonical model specifies -- for instance, we should expect a country sour that swaps the proportions of wheat and rye to ferment a good deal faster, so we should be able to quantify the effect of having more rye than the canonical model at each of the "dough at rest" stages (the fermentation stages)
