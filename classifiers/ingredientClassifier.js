@@ -1,3 +1,7 @@
+/////////////////////////////////
+/* --- SET UP CLASSIFIERS ---- */
+/////////////////////////////////
+
 // require the main library
 const natural = require('natural');
 
@@ -115,6 +119,10 @@ const convertToBakersMath = classifiedRecipe => {
 };
 const bpConvertedClassifiedRecipe = convertToBakersMath(myClassifiedRecipe);
 
+/////////////////////////////////////////
+/* --- RECIPE CONVERSION COMPLETE ---- */
+/////////////////////////////////////////
+
 // next compare user recipe to canonicals
 // require the canonicals and sub-classifiers
 const canonicals = require('../canonicalRecipes');
@@ -125,7 +133,7 @@ const {
 	eggClassifier,
 	sweetenerClassifier,
 	inclusionClassifier,
-} = require('./subClassifiers');
+} = require('./sub-classifiers');
 
 const getIngredientSubclass = (ingredient, ingredientClass) => {
 	const { name } = ingredient;
