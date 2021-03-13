@@ -6,69 +6,69 @@
 
 ### in a nutshell:
 
-this system brings agile methodology to the kitchen to solve the age-old problem of how to minimize labor and maximize output while holding production quality steady WITHOUT overstressing labor -- these are THE key performance indicators for the likely success of a bakery
+-this system brings agile methodology to the kitchen to solve the age-old problem of how to minimize labor and maximize output while holding production quality steady WITHOUT overstressing labor -- these are THE key performance indicators for the likely success of a bakery
 
-bakeries operate on terrible margins -- 6% profit year-over-year, 96% mid-week labor percentage, and rampant waste/loss of product make it highly unlikely that a bakery will survive the first two years of existence
+-bakeries operate on terrible margins -- 6% profit year-over-year, 96% mid-week labor percentage, and rampant waste/loss of product make it highly unlikely that a bakery will survive the first two years of existence
 
-the easiest way to make money is to save money. calories in, calories out -- the profitability and stability of a bakery is directly correlated to its ability to maximize production and minimize labor. everything else is window-dressing -- you can market all you want but your customer retention will be terrible if you can't produce high-quality goods profitably and consistently.
+-the easiest way to make money is to save money. calories in, calories out -- the profitability and stability of a bakery is directly correlated to its ability to maximize production and minimize labor. everything else is window-dressing -- you can market all you want but your customer retention will be terrible if you can't produce high-quality goods profitably and consistently.
 
 ### what problems does this system solve?
 
-keeps kitchen from being caught flat-footed on large orders that disrupt the "usual" flow of production
+-keeps kitchen from being caught flat-footed on large orders that disrupt the "usual" flow of production
 
-keeps kitchen from experiencing bottlenecks in production by limiting collisions to those that are "handleable" by the labor allocated to a given production schedule -- since the schedule is built on top of the user's assertion that x task will require y labor, tasks that have been improperly quantified will be readily apparent and users will be able to adjust their expectations to maximize production and rework staffing to maximize productivity
+-keeps kitchen from experiencing bottlenecks in production by limiting collisions to those that are "handleable" by the labor allocated to a given production schedule -- since the schedule is built on top of the user's assertion that x task will require y labor, tasks that have been improperly quantified will be readily apparent and users will be able to adjust their expectations to maximize production and rework staffing to maximize productivity
 
 ### how does this system improve production that isn't experiencing problems?
 
-oftentimes kitchens fail to maximize the productive capacity of their space and labor since everyone is comfortable with "the way things work here" -- the metrics this system provides allow the head baker to create reasonable expectations of productivity and allow for reasonable assumptions about labor and COGS, and will help the head baker identify low-revenue high-labor items to redline, low-productivity laborers to address, high-performing laborers who will be able to create greater output on the same number of assigned task-hours
+-oftentimes kitchens fail to maximize the productive capacity of their space and labor since everyone is comfortable with "the way things work here" -- the metrics this system provides allow the head baker to create reasonable expectations of productivity and allow for reasonable assumptions about labor and COGS, and will help the head baker identify low-revenue high-labor items to redline, low-productivity laborers to address, high-performing laborers who will be able to create greater output on the same number of assigned task-hours
 
 ### how is this going to work from a technical perspective?
 
-we will take user inputted recipes
-we will classify and match them to canonical recipes with known production timelines and labor requirements
-we will make adjustments to the projected production schedule by calculating recipe deviation metrics and adjusting parameters that are affected by classes of ingredient
+-we will take user inputted recipes
+-we will classify and match them to canonical recipes with known production timelines and labor requirements
+-we will make adjustments to the projected production schedule by calculating recipe deviation metrics and adjusting parameters that are affected by classes of ingredient
 
-the key classes that will affect production schedules are
+-the key classes that will affect production schedules are
 
 1. water: more water, easier yeast movement, faster fermentation
 2. commercial yeast: more yeast, faster fermentation
 3. preferment: more preferment, faster fermentation
 4. salt: more salt, slower fermentation
 5. type of flour: more whole grain, faster fermentation
-6. hygroscopic ingredients: including sugar and any dessicants like inclusions with dried fruits and nuts -- these will heavily impact fermentation if appropriate amounts of liquid aren't added to compensate -- we should expect higher liquid bp when these sorts of inclusions are added -- this leaves out the class of soakers, a subclass of inclusions, which are overhydrated to compensate
+6. hygroscopic ingredients: including sugar and any desiccants like inclusions with dried fruits and nuts -- these will heavily impact fermentation if appropriate amounts of liquid aren't added to compensate -- we should expect higher liquid bp when these sorts of inclusions are added -- this leaves out the class of soakers, a subclass of inclusions, which are overhydrated to compensate
 
-to a lesser extent these classes will also affect timetables
+-to a lesser extent these classes will also affect timetables
 
 7. fats: generally slow fermentation when they reach a certain bp
 8. inclusions: if they're not strongly hygroscopic, water and whole-grain content (and any salt) will be the main factors -- so we can consider the effect of inclusions on production as a reflection of the macro qualities noted above (water, salt, type of flour) and use the bp of the inclusion to quantify how it will likely affect fermentation
 
 ### classes for quantifying ingredient impact on production
 
-flour
-liquid
-salt
-yeast
-preferment
-sweetener
-inclusion
+-flour
+-liquid
+-salt
+-yeast
+-preferment
+-sweetener
+-inclusion
 
-some of these fields will be independent variables in the model -- these are the ingredientClasses that don't affect fermentation in important ways, since we can assume any recipe that deviates significantly from the canonical recipe will move "toward" another canonical recipe -- this will allow us to avoid the trap of overspecifying the model -- eg, we don't need to know the effect adding butter will have to a country sourdough, since it won't speed-up/slow-down fermentation -- the strength of the dough will be assumed to be a constant outcome, ie we will assume skilled production labor that can develop dough strength in the given production window -- and if we do modify enough ingredientClasses in a recipe, it will most likely "move" into alignment with another canonical model
+-some of these fields will be independent variables in the model -- these are the ingredientClasses that don't affect fermentation in important ways, since we can assume any recipe that deviates significantly from the canonical recipe will move "toward" another canonical recipe -- this will allow us to avoid the trap of overspecifying the model -- eg, we don't need to know the effect adding butter will have to a country sourdough, since it won't speed-up/slow-down fermentation -- the strength of the dough will be assumed to be a constant outcome, ie we will assume skilled production labor that can develop dough strength in the given production window -- and if we do modify enough ingredientClasses in a recipe, it will most likely "move" into alignment with another canonical model
 
-some fields will affect the "dough at work" parameters -- a much higher relative liquid content will require more task-hours in developing dough strength during the mix and bulk, and will likely require a pre-shape/bench-rest cycle -- the real impact of this system will come from being able to identify a recipe's relative production needs, compare the task-hours cost across recipe modifications, and inform the user of what they're giving vs getting out of a particular recipe wrt their production workflow!
+-some fields will affect the "dough at work" parameters -- a much higher relative liquid content will require more task-hours in developing dough strength during the mix and bulk, and will likely require a pre-shape/bench-rest cycle -- the real impact of this system will come from being able to identify a recipe's relative production needs, compare the task-hours cost across recipe modifications, and inform the user of what they're giving vs getting out of a particular recipe wrt their production workflow!
 
-PEP will be a good place to explain/describe how this whole process works
+-PEP will be a good place to explain/describe how this whole process works
 
-if there is a recipe that "falls through the cracks" -- one that doesn't align to any significant degree with any existing canonical model -- this is an edge case that will be handled in later project iterations -- these would be good candidates for a user prompt to explore bringing the recipe into alignment with known models, or better yet, bring up a list of recipe classifications and ask the user to CHOOSE which one this recipe aligns with! then, we can define "adjacent" recipeClasses that are user-determined: say a user says, "this dinner roll is basically a brioche" but it doesn't contain any eggs -- a good use case would be for vegan breads or gluten-free breads -- we could create a set of "brioche-like" breads that are able to be classified as brioche, but use a submodel derived from this "x-like" set. the submodel will produce a production schedule that's potentially significantly removed from the canonical model's production schedule; this allows us to "have our cake and eat it too" by classifying breads according to what users say the classifications mean to them, but still allowing us to logically group and generate production schedules by recipeClass
+-if there is a recipe that "falls through the cracks" -- one that doesn't align to any significant degree with any existing canonical model -- this is an edge case that will be handled in later project iterations -- these would be good candidates for a user prompt to explore bringing the recipe into alignment with known models, or better yet, bring up a list of recipe classifications and ask the user to CHOOSE which one this recipe aligns with! then, we can define "adjacent" recipeClasses that are user-determined: say a user says, "this dinner roll is basically a brioche" but it doesn't contain any eggs -- a good use case would be for vegan breads or gluten-free breads -- we could create a set of "brioche-like" breads that are able to be classified as brioche, but use a submodel derived from this "x-like" set. the submodel will produce a production schedule that's potentially significantly removed from the canonical model's production schedule; this allows us to "have our cake and eat it too" by classifying breads according to what users say the classifications mean to them, but still allowing us to logically group and generate production schedules by recipeClass
 
 ### next steps
 
-figure out a projected production schedule and fermentation activity curve for each canonical recipe
+-figure out a projected production schedule and fermentation activity curve for each canonical recipe
 
-define functions that modify the projected schedule and fermentation curve based on (ingredient) class deviations
+-define functions that modify the projected schedule and fermentation curve based on (ingredient) class deviations
 
-define task-hours per production lifecycle event
+-define task-hours per production lifecycle event
 
-define an algorithm that will "sort" my production schedule --> shouldn't be too bad, it will just need to place task-blocks in the most efficient way possible within a given schedule
+-define an algorithm that will "sort" my production schedule --> shouldn't be too bad, it will just need to place task-blocks in the most efficient way possible within a given schedule
 
 ### user interface
 
@@ -94,7 +94,7 @@ define an algorithm that will "sort" my production schedule --> shouldn't be too
 
 -users should be alerted when strong deviations from canonicals will result in poor production schedule builds, and users should receive suggestions on how to update a recipe to maximize output
 
-`THIS is where it gets tricky`
+-`THIS is where it gets tricky`
 -assuming users can stand the idea of ai suggesting recipe tweaks, they'll need to be able to abandon their idea of how production should work, and some changes like switching to a completely different levain build will be quite radical
 
 -users should be able to ask "how could i improve sales, cut labor, compress or expand the production timeline of x product?" and get a quantifiable answer that demonstrates how recipe adjustments will impact production schedules, and what affect the new production schedule will have on cogs, labor, net revenue. these metrics should be charted and displayed in comparison format to show short and long term benefits
