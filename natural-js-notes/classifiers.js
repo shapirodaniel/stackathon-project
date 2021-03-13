@@ -6,9 +6,24 @@ classifier.addDocument('i am long qqqq', 'buy');
 classifier.addDocument("buy the q's", 'buy');
 classifier.addDocument('short gold', 'sell');
 classifier.addDocument('sell gold', 'sell');
+classifier.addDocument('ibm shares up in premarket today', 'nasdaq');
+classifier.addDocument(
+	'tech sector explodes as bitcoin round $50k with an initial investment of $1.5 billion dollars by Tesla and enigmatic visionary Elon Musk',
+	'nasdaq'
+);
 
 classifier.train();
 
+console.log(
+	// first input returns nasdaq
+	// second input returns sell hopefully too
+	classifier.classify(
+		'silver is up in afterhours trading, futures rallies expected to crack 8% in premarket groundswell'
+	),
+	classifier.classify(
+		"silver had quite the run, but the wind is dying down and if you're not short even premarket on a monday, i don't care how much crypto you own, the end of the silver rally will tear the rug out from under you so fast you'll feel a foot shorter as you were lopped off by commodities at the knees..."
+	)
+);
 console.log(classifier.classify('i am short silver')); // return 'sell'
 console.log(classifier.classify('i am long copper')); // return 'buy'
 

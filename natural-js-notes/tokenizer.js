@@ -14,8 +14,14 @@ const {
 	AggressiveTokenizer,
 } = natural;
 
-const inputToTokenize =
-	"hey! how's it goin' to-day? i'm ... well, i'm thinking about driving to Los Alamos to see Shakira perform at the SuperBowl Half-time Show; wanna join?";
+// let's assume that we'll parse our input in the way
+// we're currently parsing it on breadbakersfriend.com
+// yielding { weight: num, unit: str, name: str }
+const inputToTokenize = [
+	'100% hi-gluten flour (sifted)',
+	'Calumet (100% whole-kernel wheat flour)',
+	'9-grain seed mix',
+].join(' ');
 
 // case tokenizer
 const wordTokenizer = new WordTokenizer();
