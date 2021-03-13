@@ -68,18 +68,5 @@ const getIngredients = input => {
 	return ingredientsList;
 };
 const ingredients = getIngredients(userInput);
-console.log(ingredients);
 
-// and each ingredient object key should be stemmed and added to a recipeClass list
-
-let recipeClasses = [];
-const ingredientNames = ingredients.map(
-	ingredient => Object.keys(ingredient)[0]
-);
-const getRecipeClasses = ingredientNames => {
-	// here we get class names for each ingredient
-	// so that we can categorize them and evaluate
-	// each of their edit distances
-	// to make predictions about how far off they are
-	// from canonical proportions in their weights
-};
+module.exports = { getIngredients };

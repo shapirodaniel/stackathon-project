@@ -1,42 +1,43 @@
 const natural = require('natural');
 
-// the ingredientClassifier can be serialized and stored in db
+// define a bayesian classifier for ingredients
 const ingredientClassifier = new natural.BayesClassifier();
 
-// train the classifier to recognize the main classes affecting production schedule outcomes -- these are the generic recipe template fields
-/*
-  const generic = {
-    flour: [{}],
-    dries: [{}],
-    liquid: [{}],
-    salt: [{}],
-    yeast: [{}],
-    sweetener: [{}],
-    egg: [{}],
-    dairy: [{}],
-    preferment: [{}],
-    inclusion: [{}],
-  };
-*/
+// train the classifier to recognize the main classes affecting production schedule outcomes (most of the generic canonical recipe template fields):
+// flour, liquid, yeast, sweetener, egg, inclusion -- ex.,
 
-// some of these fields will be independent variables in the model -- these are the ingredientClasses that don't affect fermentation in important ways, since we can assume any recipe that deviates significantly from the canonical recipe will move "toward" another canonical recipe -- this will allow us to avoid the trap of overspecifying the model -- eg, we don't need to know the effect adding butter will have to a country sourdough, since it won't speed-up/slow-down fermentation -- the strength of the dough will be assumed to be a constant outcome, ie we will assume skilled production labor that can develop dough strength in the given production window -- and if we do modify enough ingredientClasses in a recipe, it will most likely "move" into alignment with another canonical model
+const corpii = {
+	flourCorpus, // each an obj: { flour: flourCorpus }
+	liquidCorpus,
+	yeastCorpus,
+	sweetenerCorpus,
+	eggCorpus,
+	inclusionCorpus,
+};
 
-// if there is a recipe that "falls through the cracks" -- one that doesn't align to any significant degree with any existing canonical model -- this is an edge case that will be handled in later project iterations -- these would be good candidates for a user prompt to explore bringing the recipe into alignment with known models, or better yet, bring up a list of recipe classifications and ask the user to CHOOSE which one this recipe aligns with! then, we can define "adjacent" recipeClasses that are user-determined: say a user says, "this dinner roll is basically a brioche" but it doesn't contain any eggs -- a good use case would be for vegan breads or gluten-free breads -- we could create a set of "brioche-like" breads that are able to be classified as brioche, but use a submodel derived from this "x-like" set. the submodel will produce a production schedule that's potentially significantly removed from the canonical model's production schedule; this allows us to "have our cake and eat it too" by classifying breads according to what users say the classifications mean to them, but still allowing us to logically group and generate production schedules by recipeClass
+for (corpus of corpii) {
+	const ingredientClass = Object.keys(corpus)[0];
+	ingredientClassifier.addDocument(corpus[ingredientClass], ingredientClass);
+}
 
-// get an ingredient list from user input
+// after calling getIngredients(userInput), myIngredientsList is a list of objs structured:
+// [{ name: weight }, ...]
 const myIngredientList = [
-	{ flour: 100 },
+	{ 'bread flour': 35 },
+	{ 'ap flour': 30 },
+	{ 'whole wheat flour': 25 },
+	{ 'rye flour': 10 },
 	{ water: 80 },
 	{ levain: 15 },
 	{ salt: 2.5 },
 ];
 
 /*
-  take in a list of ingredient entries structured:
+  classifyRecipe() takes in a list of ingredient objs structured:
 
   [{...ingredient}, ...]
 
-  and output a classifiedRecipe structured:
+  and outputs a classifiedRecipe structured:
 
   myClassifiedRecipe: {
     ingredientClass: [{...classifiedIngredient}, ...]
@@ -48,12 +49,14 @@ const classifyRecipe = ingredients => {
 	// an object that has the generic template categories
 	// each is a list containing ingredient objs that correspond
 	// to the class
-	return ingredients.reduce((ingredient, classifiedRecipe) => {
+	return ingredients.reduce((classifiedRecipe, ingredient) => {
 		// get ingredient name
 		const [name] = Object.keys(ingredient);
 
 		// get ingredient class from name
 		const ingredientClass = ingredientClassifier.classify(name);
+
+		// sub-class as necessary with a subclass helper
 
 		// either add the ingredient to the class array on the classifiedRecipe object or, if the class doesn't yet exist, add a new key with a value of [ {...ingredient} ]
 		classifiedRecipe[ingredientClass]
@@ -73,4 +76,55 @@ const myClassifiedRecipe = classifyRecipe(myIngredientList);
 
 // after sifting canonical models to arrive at a few candidates, measure the edit distance of ingredient names from canonical ingredient names and select the model that minimizes edit distance
 
-// next we'll get the classifications for a classifiedRecipe and create a vector for each ingredientClass, and use it to quantify the effect of deviation from the canonical model
+// next we'll need to more finely sift ingredients by sub-classifying them to get "scores" that will affect the big quantification metrics for an ingredientClass -- for example, flours should be roughly classified as white or whole grain, and whole grain should be divided into wheats and ryes
+
+// require the sub-classifiers
+const {
+	flourClassifier,
+	liquidClassifier,
+	yeastClassifier,
+	eggClassifier,
+	sweetenerClassifier,
+	inclusionClassifier,
+} = require('./subClassifiers');
+
+const getIngredientSubclass = (ingredient, ingredientClass) => {
+	// train sub-classifiers for each ingredientClass, then switch on ingredientClass and get the sub-class for each ingredient
+
+	const { name } = ingredient;
+
+	switch (ingredientClass) {
+		case 'flour':
+			return flourClassifier.classify(name);
+
+		case 'liquid':
+			return liquidClassifier.classify(name);
+
+		case 'yeast':
+			return yeastClassifier.classify(name);
+
+		case 'egg':
+			return eggClassifier.classify(name);
+
+		case 'sweetener':
+			return sweetenerClassifier.classify(name);
+
+		case 'inclusion':
+			return inclusionClassifier.classify(name);
+
+		// return empty string by default, which will allow us to ignore non-sub-classified ingredient effects later on, by only considering sub-classes with a length > 0
+		default:
+			return '';
+	}
+};
+
+// do the minimal amount of sifting necessary to be able to quantify the overall affect of having more or less of one kind of flour than the canonical model specifies -- for instance, we should expect a country sour that swaps the proportions of wheat and rye to ferment a good deal faster, so we should be able to quantify the effect of having more rye than the canonical model at each of the "dough at rest" stages (the fermentation stages)
+
+// define sub-classifiers and get the metric for each ingredientClass as a sum of the weighted scores of all sub-classified ingredients, where a weighted score is:
+
+/*
+
+  ex., flours: [{name: 'bread', weight: 100}]
+
+
+*/

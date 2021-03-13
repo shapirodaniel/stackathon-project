@@ -52,6 +52,14 @@ preferment
 sweetener
 inclusion
 
+some of these fields will be independent variables in the model -- these are the ingredientClasses that don't affect fermentation in important ways, since we can assume any recipe that deviates significantly from the canonical recipe will move "toward" another canonical recipe -- this will allow us to avoid the trap of overspecifying the model -- eg, we don't need to know the effect adding butter will have to a country sourdough, since it won't speed-up/slow-down fermentation -- the strength of the dough will be assumed to be a constant outcome, ie we will assume skilled production labor that can develop dough strength in the given production window -- and if we do modify enough ingredientClasses in a recipe, it will most likely "move" into alignment with another canonical model
+
+some fields will affect the "dough at work" parameters -- a much higher relative liquid content will require more task-hours in developing dough strength during the mix and bulk, and will likely require a pre-shape/bench-rest cycle -- the real impact of this system will come from being able to identify a recipe's relative production needs, compare the task-hours cost across recipe modifications, and inform the user of what they're giving vs getting out of a particular recipe wrt their production workflow!
+
+PEP will be a good place to explain/describe how this whole process works
+
+if there is a recipe that "falls through the cracks" -- one that doesn't align to any significant degree with any existing canonical model -- this is an edge case that will be handled in later project iterations -- these would be good candidates for a user prompt to explore bringing the recipe into alignment with known models, or better yet, bring up a list of recipe classifications and ask the user to CHOOSE which one this recipe aligns with! then, we can define "adjacent" recipeClasses that are user-determined: say a user says, "this dinner roll is basically a brioche" but it doesn't contain any eggs -- a good use case would be for vegan breads or gluten-free breads -- we could create a set of "brioche-like" breads that are able to be classified as brioche, but use a submodel derived from this "x-like" set. the submodel will produce a production schedule that's potentially significantly removed from the canonical model's production schedule; this allows us to "have our cake and eat it too" by classifying breads according to what users say the classifications mean to them, but still allowing us to logically group and generate production schedules by recipeClass
+
 ### next steps
 
 figure out a projected production schedule and fermentation activity curve for each canonical recipe
