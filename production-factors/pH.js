@@ -13,11 +13,13 @@
 // dried fruit/produce inclusions lower pH
 // dried seed/nut inclusions raise pH
 
-// ingredients that affect pH
-const pHFactors = new Set([
+// salt does *not* affect pH! (for our purposes)
+
+const pHClasses = new Set(['flour', 'dairy', 'inclusion']);
+
+const pHSubclasses = new Set([
 	'whole grain',
 	'rye',
-	'dairy',
 	'dried fruit',
 	'dried produce',
 	'seed',
@@ -28,18 +30,18 @@ const pHFactors = new Set([
 const getpHImpact = ingredientClass => {
 	switch (ingredientClass) {
 		case 'rye':
-			return 2;
+			return 3;
 		case 'whole grain':
-			return 1;
+			return 2;
 		case 'hi extraction':
-			return 1;
+			return 1.5;
 		case 'dairy':
-			return -0.5;
-		case 'dried fruit':
 			return 0.5;
+		case 'dried fruit':
+			return 1.5;
 		default:
-			return 0;
+			return 1;
 	}
 };
 
-module.exports = { pHFactors, getpHImpact };
+module.exports = { pHClasses, pHSubclasses, getpHImpact };
