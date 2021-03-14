@@ -73,7 +73,7 @@ const convertToBakersMath = classifiedRecipe => {
 			// ingredientClass is the object's key
 			const name = Object.keys(ingredient)[0];
 
-			// baker's percentage is a fixed-decimal number
+			// baker's percentage is a fixed-decimal number (cast to number with leading + )
 			const bp = +((ingredient[name] / totalFlour) * 100).toFixed(2);
 
 			// the new ingredient object
