@@ -15,6 +15,17 @@ const challah = require('./challah');
 const cinnamonPotato = require('./cinnamonPotato');
 const generic = require('./generic');
 
+const getRecipeString = recipe => {
+	let res = '';
+	for (ingredientClass in recipe) {
+		const ingredients = recipe[ingredientClass];
+		res += ingredients
+			.map(ingredient => `${ingredient.bp} ${ingredient.name} `)
+			.join('');
+	}
+	return res.trim();
+};
+
 module.exports = {
 	countrySour,
 	brioche,
@@ -32,6 +43,7 @@ module.exports = {
 	challah,
 	cinnamonPotato,
 	generic,
+	getRecipeString,
 };
 
 // convert yeast on the frontend with a conversion factor
