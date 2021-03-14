@@ -15,23 +15,21 @@ const {
 const getScore = (convertedRecipe, factorsSet, getImpact) => {
 	// total score
 	let total = 0;
-
 	// loop through ingredient classes and sum subclass scores
 	for (ingredientClass in convertedRecipe) {
 		// if ingredient class affects factor...
 		if (factorsSet.has(ingredientClass)) {
-			// ... add the sum of it's factor-relevant scores to total
-			total += convertedRecipe[ingredientClass].reduce(
-				(sum, ingredient) => {
+			// ... add the sum of it's factor-relevant scores to total, first by invoking getImpact on the ingredient class itself, then on its subclasses
+			total +=
+				getImpact(ingredientClass) +
+				convertedRecipe[ingredientClass].reduce((sum, ingredient) => {
 					// if there are subclasses, return the sum of their scores, else return 0
 					return sum + ingredient.subclasses.length
 						? ingredient.subclasses
 								.map(subclass => getImpact(subclass))
 								.reduce((a, b) => a + b, 0)
 						: 0;
-				},
-				0
-			);
+				}, 0);
 		}
 	}
 };
