@@ -1,3 +1,31 @@
+const flourTrainingData = [
+	'flour',
+	'bread flour',
+	'ap flour',
+	'white flour',
+	'strong flour',
+	'plain flour',
+	'ap',
+	'ap flour',
+	'all-purpose',
+	'all purpose',
+	'all-purpose flour',
+	'all purpose flour',
+	'bread',
+	'bread flour',
+	'hi-gluten flour',
+	'hi-gluten bread flour',
+	'ww',
+	'ww flour',
+	'whole-wheat flour',
+	'whole wheat flour',
+	'100% whole wheat flour',
+	'rye',
+	'rye flour',
+	'sifted rye flour',
+	'whole-kernel rye flour',
+];
+
 const wholeGrainTrainingData = [
 	'spelt',
 	'einkorn',
@@ -17,7 +45,8 @@ const ryeTrainingData = [
 
 const hiExtractionTrainingData = ['hi-extraction', 'extraction', 'unsifted'];
 
-const allFlourTrainingData = [...wholeGrainTrainingData].concat(
+const allFlourTrainingData = [...flourTrainingData].concat(
+	wholeGrainTrainingData,
 	ryeTrainingData,
 	hiExtractionTrainingData
 );

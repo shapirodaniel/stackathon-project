@@ -4,6 +4,9 @@ const { getIngredientList } = require('./helpers');
 
 // require the ingredientClassifier and sub-classifiers
 const ingredientClassifier = require('./ingredientClassifier');
+
+console.log('classifier: ', ingredientClassifier);
+
 const { getIngredientSubclass } = require('./sub-classifiers');
 
 /*

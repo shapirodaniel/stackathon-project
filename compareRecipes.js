@@ -4,8 +4,6 @@ const canonicals = require('./canonicals/recipes/breads');
 const { getClassifiedRecipe } = require('./recipe-classifiers');
 const { getScores } = require('./production-factors');
 
-console.dir(canonicals);
-
 const findCanonicalMatch = userInput => {
 	// select a canonical recipe
 	// how to do this?
