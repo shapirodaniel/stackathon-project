@@ -33,6 +33,11 @@ const {
 	driedFruitTrainingData,
 } = require('./inclusionCorpus');
 
+const {
+	allPrefermentTrainingData,
+	prefermentTrainingData,
+} = require('./prefermentCorpus');
+
 const { allSaltTrainingData, saltTrainingData } = require('./saltCorpus');
 
 module.exports = {
@@ -65,4 +70,7 @@ module.exports = {
 	// salt
 	allSaltTrainingData,
 	saltTrainingData,
+	// preferment
+	allPrefermentTrainingData,
+	prefermentTrainingData,
 };

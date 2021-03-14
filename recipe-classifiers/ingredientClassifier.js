@@ -16,6 +16,7 @@ const { allLiquidTrainingData } = require('./training-data');
 const { allSweetenerTrainingData } = require('./training-data');
 const { allYeastTrainingData } = require('./training-data');
 const { allSaltTrainingData } = require('./training-data');
+const { allPrefermentTrainingData } = require('./training-data');
 
 // add docs
 ingredientClassifier.addDocument(allEggTrainingData, 'egg');
@@ -25,6 +26,7 @@ ingredientClassifier.addDocument(allLiquidTrainingData, 'liquid');
 ingredientClassifier.addDocument(allSweetenerTrainingData, 'sweetener');
 ingredientClassifier.addDocument(allYeastTrainingData, 'yeast');
 ingredientClassifier.addDocument(allSaltTrainingData, 'salt');
+ingredientClassifier.addDocument(allPrefermentTrainingData, 'preferment');
 
 // train the classifier
 ingredientClassifier.train();

@@ -37,7 +37,8 @@ const getRecipeDiff = (userInput, canonical) => {
 	const canonicalScores = getScores(getClassifiedRecipe(canonical));
 	// copy the canonical scores and subtract each user score
 	const totalDiff = { ...canonicalScores };
-	for (score in totalDiff) totalDiff[score] -= userScores[score];
+	for (score in totalDiff)
+		totalDiff[score] = userScores[score] - totalDiff[score];
 
 	// return { pH, yeastMotility, yeastConcentration }
 	return totalDiff;
