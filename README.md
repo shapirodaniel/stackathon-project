@@ -60,6 +60,12 @@
 
 -if there is a recipe that "falls through the cracks" -- one that doesn't align to any significant degree with any existing canonical model -- this is an edge case that will be handled in later project iterations -- these would be good candidates for a user prompt to explore bringing the recipe into alignment with known models, or better yet, bring up a list of recipe classifications and ask the user to CHOOSE which one this recipe aligns with! then, we can define "adjacent" recipeClasses that are user-determined: say a user says, "this dinner roll is basically a brioche" but it doesn't contain any eggs -- a good use case would be for vegan breads or gluten-free breads -- we could create a set of "brioche-like" breads that are able to be classified as brioche, but use a submodel derived from this "x-like" set. the submodel will produce a production schedule that's potentially significantly removed from the canonical model's production schedule; this allows us to "have our cake and eat it too" by classifying breads according to what users say the classifications mean to them, but still allowing us to logically group and generate production schedules by recipeClass
 
+-do the minimal amount of sifting necessary to be able to quantify the overall affect of having more or less of one kind of ingredient than the canonical model specifies -- for instance, we should expect a country sour that swaps the proportions of wheat and rye to ferment a good deal faster, so we should be able to quantify the effect of having more rye than the canonical model at each of the "dough at rest" stages (the fermentation stages)
+
+-most factors can be evaluated purely by comparing baker's math in the convertedRecipe to the canonical recipe -- those that differ qualitatively need to have their effects measured and silo'd and applied to the full production schedule calculation
+
+-for example, if the user recipe is an up/down match to a canonical in all top-level ingredientClass comparisons -- eg hydration as a function of total flour and liquids -- the subclasses will be the differentiators if ingredient quantities differ
+
 ### next steps
 
 -figure out a projected production schedule and fermentation activity curve for each canonical recipe
