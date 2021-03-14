@@ -26,7 +26,7 @@ const pHSubclasses = new Set([
 	'nut',
 ]);
 
-// return the pH impact of an ingredient class
+// return the pH impact of an ingredient class or subclass
 const getpHImpact = ingredientClass => {
 	switch (ingredientClass) {
 		case 'rye':
@@ -37,8 +37,10 @@ const getpHImpact = ingredientClass => {
 			return 1.5;
 		case 'dairy':
 			return 0.5;
-		case 'dried fruit':
+		case 'dried fruit' || 'dried produce':
 			return 1.5;
+		case 'seed' || 'nut':
+			return 0.75;
 		default:
 			return 1;
 	}

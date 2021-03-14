@@ -11,6 +11,7 @@ const yeastMotilityClasses = new Set([
 	'flour',
 	'preferment',
 	'inclusion',
+	'liquid',
 ]);
 
 const yeastMotilitySubclasses = new Set([
@@ -28,17 +29,30 @@ const yeastMotilitySubclasses = new Set([
 	'tangzhong',
 	'yudane',
 	'biga',
+	'water',
+	'milk',
+	'oil',
 ]);
 
 // yeast motility depends on the following factors:
-// hydration: this is a synthetic category -- divide sum of liquids by totalFlour and assign a hydration score
+// liquid raises yeastMotility
 // sweetener lowers yeastMotility
 // salt lowers yeastMotility
 // inclusions will generally lower yeastMotility
 // preferments -- most will slightly raise yeast motility, biga lowers it at significant bp's, like the canonical ciabatta
+
+// return the yeast concentration impact of an ingredient class or subclass
 const getYeastMotilityImpact = ingredientClass => {
 	switch (ingredientClass) {
 		// impact of hydration is +2 so we put desiccants and other hygroscopic ingredients at -2
+		case 'liquid':
+			return 3;
+		case 'water':
+			return 1;
+		case 'milk':
+			return 1;
+		case 'oil':
+			return 0.75;
 		case 'dry sweetener':
 			return 0.25;
 		case 'syrup':

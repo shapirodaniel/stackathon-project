@@ -8,6 +8,7 @@
 // yeast concentration depends on the following factors:
 // yeast -- more yeast raises yeast concentration
 // preferments -- more preferments raises yeast concentration
+// sweeteners -- more sugar raises yeast concentration
 const yeastConcentrationClasses = new Set(['yeast', 'preferment', 'sweetener']);
 
 const yeastConcentrationSubclasses = new Set([
@@ -19,8 +20,11 @@ const yeastConcentrationSubclasses = new Set([
 	'biga',
 ]);
 
+// return the yeast concentration impact of an ingredient class or subclass
 const getYeastConcentrationImpact = ingredientClass => {
 	switch (ingredientClass) {
+		case 'yeast':
+			return 3;
 		case 'dry sweetener':
 			return 1.75;
 		case 'syrup':
