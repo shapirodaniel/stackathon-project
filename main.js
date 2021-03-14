@@ -17,3 +17,6 @@ const canonicalClassifiedRecipe = getClassifiedRecipe(canonicalIngredientList);
 
 console.log('userClassifiedRecipe:\n', userClassifiedRecipe);
 console.log('canonicalClassifiedRecipe:\n', canonicalClassifiedRecipe);
+
+const diff = getRecipeDiff(userIngredientList, canonicalIngredientList);
+console.log('diff:\n', diff);

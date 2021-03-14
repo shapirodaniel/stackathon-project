@@ -41,7 +41,9 @@ const getScore = (
 					const topLevelClassImpact = getImpact(ingredientClass);
 
 					// then get subclassImpact score, which is a non-negative scaling factor
-					const subclassImpact = ingredient.subclasses.length
+					const subclassImpact = !ingredient.subclasses
+						? 1
+						: ingredient.subclasses.length
 						? ingredient.subclasses
 								.map(subclass =>
 									setOfSubclasses.has(subclass)
@@ -66,15 +68,17 @@ const getScore = (
 // return an object with pH, yeastMotility, and yeastConcentration scores
 const getScores = convertedRecipe => {
 	return {
-		pH: getScore(convertedRecipe, pHFactors, getpHImpact),
+		pH: getScore(convertedRecipe, pHClasses, pHSubclasses, getpHImpact),
 		yeastMotility: getScore(
 			convertedRecipe,
-			yeastMotilityFactors,
+			yeastMotilityClasses,
+			yeastMotilitySubclasses,
 			getYeastMotilityImpact
 		),
 		yeastConcentration: getScore(
 			convertedRecipe,
-			yeastConcentrationFactors,
+			yeastConcentrationClasses,
+			yeastConcentrationSubclasses,
 			getYeastConcentrationImpact
 		),
 	};

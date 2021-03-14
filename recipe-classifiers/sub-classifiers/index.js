@@ -16,7 +16,7 @@ const yeastClassifier = require('./yeast');
 	const subclassedIngredient = getIngredientSubclass(ingredient, ingredientClass) // returns subclass 'rye'
 */
 const getIngredientSubclass = (ingredient, ingredientClass) => {
-	const { name } = ingredient;
+	const name = Object.keys(ingredient)[0];
 
 	switch (ingredientClass) {
 		case 'flour':
