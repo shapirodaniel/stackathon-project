@@ -9,17 +9,23 @@ const natural = require('natural');
 const ingredientClassifier = new natural.BayesClassifier();
 
 // require the corpuses that will be used to train the classifier
-const corpii = require('./training-data');
+const { allEggTrainingData } = require('./training-data');
+const { allFlourTrainingData } = require('./training-data');
+const { allInclusionCorpus } = require('./training-data');
+const { allLiquidTrainingData } = require('./training-data');
+const { allSweetenerTrainingData } = require('./training-data');
+const { allYeastTrainingData } = require('./training-data');
+const { allSaltTrainingData } = require('./training-data');
 
-// train the classifier
-// addDocument() takes a corpus: array of strings, and a class: string
-for (corpus of corpii) {
-	// get the class from the corpus key
-	const ingredientClass = Object.keys(corpus)[0];
+// add docs
+ingredientClassifier.addDocument(allEggTrainingData, 'egg');
+ingredientClassifier.addDocument(allFlourTrainingData, 'flour');
+ingredientClassifier.addDocument(allInclusionCorpus, 'inclusion');
+ingredientClassifier.addDocument(allLiquidTrainingData, 'liquid');
+ingredientClassifier.addDocument(allSweetenerTrainingData, 'sweetener');
+ingredientClassifier.addDocument(allYeastTrainingData, 'yeast');
+ingredientClassifier.addDocument(allSaltTrainingData, 'salt');
 
-	// add the corpus's training data to the classifier
-	ingredientClassifier.addDocument(corpus[ingredientClass], ingredientClass);
-}
 // train the classifier
 ingredientClassifier.train();
 
