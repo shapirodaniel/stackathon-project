@@ -35,9 +35,11 @@ const classifyRecipe = ingredientList => {
 		// sub-class as necessary with a getIngredientSubclass helper
 		// sub-classes only affect their parent class (this simplifies the model that quantifies deviation effects)
 		// getIngredientSubclass() returns an array of subclasses
-		const subclasses = getIngredientSubclass(ingredient, ingredientClass);
+		const subclass = getIngredientSubclass(ingredient, ingredientClass);
 
-		ingredient.subclasses = [...subclasses];
+		!ingredient.subclasses
+			? (ingredient.subclasses = [subclass])
+			: ingredient.subclasses.push(subclass);
 
 		// either add the ingredient to the class array on the classifiedRecipe object or, if the class doesn't yet exist, add a new key with a value of [ {...ingredient} ]
 		classifiedRecipe[ingredientClass]
