@@ -1,11 +1,10 @@
 // next compare user recipe to canonicals
 // require the canonicals and sub-classifiers
-const canonicals = require('./canonicals/recipes');
+const canonicals = require('./canonicals/recipes/breads');
 const { getClassifiedRecipe } = require('./recipe-classifiers');
 const { getScores } = require('./production-factors');
 
-// do a rough match on ingredient classes and subclasses by length
-// if that doesn't return 1-2 results, check edit distance of ingredients
+console.dir(canonicals);
 
 const findCanonicalMatch = userInput => {
 	// select a canonical recipe

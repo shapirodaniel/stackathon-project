@@ -1,5 +1,5 @@
 const natural = require('natural');
-const yeastClassifier = natural.BayesClassifier();
+const yeastClassifier = new natural.BayesClassifier();
 const { yeastTrainingData } = require('../training-data');
 
 yeastClassifier.addDocument(yeastTrainingData, 'yeast');

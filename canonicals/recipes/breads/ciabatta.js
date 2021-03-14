@@ -1,4 +1,4 @@
-const { biga12Hr } = require('./preferments');
+const { biga12Hr } = require('../preferments');
 
 const ciabatta = {
 	flour: [

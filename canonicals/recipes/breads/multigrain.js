@@ -1,5 +1,5 @@
-const { levain24Hr } = require('./preferments');
-const { seedSoaker } = require('./inclusions');
+const { levain24Hr } = require('../preferments');
+const { seedSoaker } = require('../inclusions');
 const multigrain = {
 	flour: [
 		{

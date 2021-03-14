@@ -1,5 +1,5 @@
 const natural = require('natural');
-const inclusionClassifier = natural.BayesClassifier();
+const inclusionClassifier = new natural.BayesClassifier();
 
 const {
 	seedTrainingData,

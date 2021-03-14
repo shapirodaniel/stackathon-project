@@ -1,4 +1,4 @@
-const { levain24Hr } = require('./preferments');
+const { levain24Hr } = require('../preferments');
 const pretzel = {
 	flour: [
 		{

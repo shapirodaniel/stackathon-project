@@ -1,4 +1,4 @@
-const { poolish24Hr } = require('./preferments');
+const { poolish24Hr } = require('../preferments');
 
 const wholeWheat = {
 	flour: [

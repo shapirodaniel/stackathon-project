@@ -1,5 +1,5 @@
 const natural = require('natural');
-const liquidClassifier = natural.BayesClassifier();
+const liquidClassifier = new natural.BayesClassifier();
 const {
 	waterTrainingData,
 	milkTrainingData,

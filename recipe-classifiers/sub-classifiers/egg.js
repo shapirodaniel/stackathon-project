@@ -1,5 +1,5 @@
 const natural = require('natural');
-const eggClassifier = natural.BayesClassifier();
+const eggClassifier = new natural.BayesClassifier();
 const {
 	wholeEggTrainingData,
 	eggYolkTrainingData,

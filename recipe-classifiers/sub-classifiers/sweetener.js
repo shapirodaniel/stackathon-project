@@ -1,6 +1,9 @@
 const natural = require('natural');
-const sweetenerClassifier = natural.BayesClassifier();
-const { drySweetenerTrainingData, syrupTrainingData };
+const sweetenerClassifier = new natural.BayesClassifier();
+const {
+	drySweetenerTrainingData,
+	syrupTrainingData,
+} = require('../training-data');
 
 sweetenerClassifier.addDocument(drySweetenerTrainingData, 'dry sweetener');
 sweetenerClassifier.addDocument(syrupTrainingData, 'syrup');

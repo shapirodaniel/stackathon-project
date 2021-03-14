@@ -1,7 +1,4 @@
-const {
-	levain24Hr,
-	poolish24Hr,
-} = require('../../canonicalRecipes/preferments');
+const { levain24Hr, poolish24Hr } = require('../preferments');
 
 const bagel = {
 	flour: [

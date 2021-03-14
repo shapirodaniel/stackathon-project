@@ -1,5 +1,5 @@
 const natural = require('natural');
-const flourClassifier = natural.BayesClassifier();
+const flourClassifier = new natural.BayesClassifier();
 const {
 	wholeGrainTrainingData,
 	ryeTrainingData,
