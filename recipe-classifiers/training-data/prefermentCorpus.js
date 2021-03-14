@@ -1,25 +1,33 @@
-const prefermentTrainingData = [
+const neutralPrefermentTrainingData = ['tangzhong', 'yudane'];
+
+const activeStiffPrefermentTrainingData = [
+	'lievito madre',
+	'chef',
+	'biga',
+	'pate fermentee',
+	'old dough',
+	'stiff starter',
+];
+
+const fullHydrationPrefermentTrainingData = [
 	'starter',
 	'sourdough starter',
 	'sour dough starter',
 	'mother',
-	'madre lievito',
-	'chef',
 	'levain',
 	'leaven',
 	'poolish',
-	'biga',
-	'stiff starter',
-	'pate fermentee',
-	'old dough',
-	'tangzhong',
-	'yudane',
 	'sponge',
 ];
 
-const allPrefermentTrainingData = [...prefermentTrainingData];
+const allPrefermentTrainingData = [...neutralPrefermentTrainingData].concat(
+	activeStiffPrefermentTrainingData,
+	fullHydrationPrefermentTrainingData
+);
 
 module.exports = {
 	allPrefermentTrainingData,
-	prefermentTrainingData,
+	neutralPrefermentTrainingData,
+	activeStiffPrefermentTrainingData,
+	fullHydrationPrefermentTrainingData,
 };

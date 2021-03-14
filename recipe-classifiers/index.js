@@ -37,8 +37,7 @@ const classifyRecipe = ingredientList => {
 		// getIngredientSubclass() returns an array of subclasses
 		const subclasses = getIngredientSubclass(ingredient, ingredientClass);
 
-		// assign subclasses array to ingredient
-		ingredient.subclasses = subclasses;
+		ingredient.subclasses = [...subclasses];
 
 		// either add the ingredient to the class array on the classifiedRecipe object or, if the class doesn't yet exist, add a new key with a value of [ {...ingredient} ]
 		classifiedRecipe[ingredientClass]
@@ -78,7 +77,7 @@ const convertToBakersMath = classifiedRecipe => {
 			const bp = +((ingredient[name] / totalFlour) * 100).toFixed(2);
 
 			// the new ingredient object
-			return { name: name, bp: bp };
+			return { name: name, bp: bp, subclasses: ingredient.subclasses };
 		});
 
 		// replace the clasifiedRecipe value with the new list

@@ -115,3 +115,14 @@
 // diff:
  { pH: 0, yeastMotility: 19.875, yeastConcentration: 5 }
 ```
+
+# now i'm concerned that motility isn't factoring something in and pH is 0 across all tests, so there may be an issue with the pH calculator -- realized that the baker's math conversion was discarding all subclasses! so i add them back in at the end of convertToBakersMath() call:
+
+```javascript
+//diff:
+ { pH: 0, yeastMotility: 4.875, yeastConcentration: 5 }
+//diff2:
+ { pH: 0, yeastMotility: -1.9750000000000014, yeastConcentration: -2 }
+//diffIdent:
+ { pH: 0, yeastMotility: 0, yeastConcentration: 0 }
+```

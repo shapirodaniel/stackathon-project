@@ -35,7 +35,9 @@ const {
 
 const {
 	allPrefermentTrainingData,
-	prefermentTrainingData,
+	neutralPrefermentTrainingData,
+	activeStiffPrefermentTrainingData,
+	fullHydrationPrefermentTrainingData,
 } = require('./prefermentCorpus');
 
 const { allSaltTrainingData, saltTrainingData } = require('./saltCorpus');
@@ -72,5 +74,7 @@ module.exports = {
 	saltTrainingData,
 	// preferment
 	allPrefermentTrainingData,
-	prefermentTrainingData,
+	neutralPrefermentTrainingData,
+	activeStiffPrefermentTrainingData,
+	fullHydrationPrefermentTrainingData,
 };
