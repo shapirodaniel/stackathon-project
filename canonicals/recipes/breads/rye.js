@@ -3,7 +3,7 @@ const { poolish24Hr, levain24Hr } = require('../preferments');
 const rye = {
 	flour: [
 		{
-			name: 'bread',
+			name: 'bread flour',
 			bp: 75,
 		},
 		{ name: 'rye', bp: 25 },

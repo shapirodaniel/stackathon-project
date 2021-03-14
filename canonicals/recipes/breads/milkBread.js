@@ -3,7 +3,7 @@ const { yudane } = require('../preferments');
 const milkBread = {
 	flour: [
 		{
-			name: 'bread',
+			name: 'bread flour',
 			bp: 100,
 		},
 	],

@@ -3,7 +3,7 @@ const { seedSoaker } = require('../inclusions');
 const multigrain = {
 	flour: [
 		{
-			name: 'bread',
+			name: 'bread flour',
 			bp: 100,
 		},
 	],

@@ -3,7 +3,7 @@ const { poolish24Hr } = require('../preferments');
 const wholeWheat = {
 	flour: [
 		{
-			name: 'bread',
+			name: 'bread flour',
 			bp: 40,
 		},
 		{

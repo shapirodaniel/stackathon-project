@@ -1,7 +1,7 @@
 const pizza = {
 	flour: [
 		{
-			name: 'bread',
+			name: 'bread flour',
 			bp: 86,
 		},
 		{ name: 'ap', bp: 14 },

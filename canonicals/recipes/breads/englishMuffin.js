@@ -1,7 +1,7 @@
 const englishMuffin = {
 	flour: [
 		{
-			name: 'all purpose flour',
+			name: 'ap',
 			bp: 80,
 		},
 		{

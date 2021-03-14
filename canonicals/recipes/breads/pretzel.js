@@ -2,7 +2,7 @@ const { levain24Hr } = require('../preferments');
 const pretzel = {
 	flour: [
 		{
-			name: 'bread',
+			name: 'bread flour',
 			bp: 84,
 		},
 		{

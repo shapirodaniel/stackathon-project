@@ -1,7 +1,7 @@
 const challah = {
 	flour: [
 		{
-			name: 'bread',
+			name: 'bread flour',
 			bp: 65,
 		},
 		{ name: 'ap', bp: 35 },

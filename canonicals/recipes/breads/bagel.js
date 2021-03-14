@@ -3,7 +3,7 @@ const { levain24Hr, poolish24Hr } = require('../preferments');
 const bagel = {
 	flour: [
 		{
-			name: 'hi gluten',
+			name: 'hi gluten flour',
 			bp: 100,
 		},
 	],
