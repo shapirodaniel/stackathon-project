@@ -60,3 +60,11 @@ console.log('diffIdent:\n', diffIdent);
 	diffIdent:
 	{ pH: 0, yeastMotility: 0, yeastConcentration: 0 }
 */
+
+const breads = require('./canonicals/breads');
+const { getRecipeString } = breads;
+
+for (recipe in breads) {
+	if (recipe instanceof Function) continue;
+	console.log(getRecipeString(recipe));
+}

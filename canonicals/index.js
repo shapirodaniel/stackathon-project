@@ -26,7 +26,7 @@ const getRecipeString = recipe => {
 	return res.trim();
 };
 
-module.exports = {
+module.exports = breads = {
 	countrySour,
 	brioche,
 	milkBread,
