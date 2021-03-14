@@ -126,3 +126,15 @@
 //diffIdent:
  { pH: 0, yeastMotility: 0, yeastConcentration: 0 }
 ```
+
+# after adding a prefermentClassifier i realize that numbers aren't making a whole lot of sense so i logged the subclasses to see what's in them
+
+```javascript
+[
+	'["flour",[{"name":"bread flour","bp":50,"subclasses":["w","h","o","l","e"," ","g","r","a","i","n"]},{"name":"ww","bp":30,"subclasses":["w","h","o","l","e"," ","g","r","a","i","n"]},{"name":"rye","bp":20,"subclasses":["r","y","e"]}]]',
+	'["liquid",[{"name":"water","bp":80,"subclasses":["w","a","t","e","r"]}]]',
+	'["preferment",[{"name":"levain","bp":15,"subclasses":["l","o","o","s","e"]},{"name":"poolish","bp":3,"subclasses":["l","o","o","s","e"]}]]',
+	'["salt",[{"name":"salt","bp":2.6,"subclasses":[]}]]',
+	'["yeast",[{"name":"fresh yeast","bp":0.8,"subclasses":["y","e","a","s","t"]}]]',
+];
+```

@@ -27,6 +27,14 @@ const user2 =
 	'250 bread flour 150 ww 100 rye 400 water 75 levain 15 poolish 13 salt 4 fresh yeast';
 const canonical2 =
 	'60 bread flour 20 ap flour 15 ww 5 rye 88 water 10 levain 10 poolish 2.5 salt .33 fresh yeast';
+
+console.log(
+	Object.entries(getClassifiedRecipe(getIngredientList(user2))).map(arr =>
+		JSON.stringify(arr)
+	)
+);
+console.dir(getClassifiedRecipe(getIngredientList(canonical2)));
+
 const diff2 = getRecipeDiff(
 	getIngredientList(user2),
 	getIngredientList(canonical2)
