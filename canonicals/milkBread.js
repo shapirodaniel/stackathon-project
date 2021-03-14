@@ -1,4 +1,4 @@
-const { yudane } = require('../preferments');
+const { yudane } = require('./preferments');
 
 const milkBread = {
 	flour: [

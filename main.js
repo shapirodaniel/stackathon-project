@@ -61,7 +61,7 @@ console.log('diffIdent:\n', diffIdent);
 	{ pH: 0, yeastMotility: 0, yeastConcentration: 0 }
 */
 
-const breads = require('./canonicals/breads');
+const { breads } = require('./canonicals');
 const { getRecipeString } = breads;
 
 for (recipe in breads) {

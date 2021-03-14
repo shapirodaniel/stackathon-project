@@ -1,6 +1,6 @@
 // next compare user recipe to canonicals
 // require the canonicals and sub-classifiers
-const canonicals = require('./canonicals/recipes/breads');
+// const canonicals = require('./canonicals/');
 const { getClassifiedRecipe } = require('./recipe-classifiers');
 const { getScores } = require('./production-factors');
 
