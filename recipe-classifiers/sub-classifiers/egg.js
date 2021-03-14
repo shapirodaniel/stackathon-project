@@ -1,7 +1,15 @@
 const natural = require('natural');
 const eggClassifier = natural.BayesClassifier();
-module.exports = eggClassifier;
+const {
+	wholeEggTrainingData,
+	eggYolkTrainingData,
+} = require('../training-data');
 
-// train to recognize whole egg, yolk, whites
+eggClassifier.addDocument(wholeEggTrainingData, 'whole egg');
+eggClassifier.addDocument(eggYolkTrainingData, 'yolk');
+eggClassifier.train();
+
+// train to recognize whole egg, yolk
 // mostly for comparing enriched dough egg-type content
-// (hard to imagine a situation where egg-whites are a valuable metric)
+
+module.exports = eggClassifier;

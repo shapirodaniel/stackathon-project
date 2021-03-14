@@ -9,7 +9,7 @@ const natural = require('natural');
 const ingredientClassifier = new natural.BayesClassifier();
 
 // require the corpuses that will be used to train the classifier
-const corpii = require('../recipe-classifiers-training-data');
+const corpii = require('./training-data');
 
 // train the classifier
 // addDocument() takes a corpus: array of strings, and a class: string
