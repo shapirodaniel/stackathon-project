@@ -88,7 +88,7 @@ const convertToBakersMath = classifiedRecipe => {
 	return classifiedRecipe;
 };
 
-const getClassifiedRecipe = ingredientList =>
-	convertToBakersMath(classifyRecipe(ingredientList));
+const getClassifiedRecipe = userInput =>
+	convertToBakersMath(classifyRecipe(getIngredientList(userInput)));
 
 module.exports = { getClassifiedRecipe };

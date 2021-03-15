@@ -1,70 +1,102 @@
-const { getIngredientList } = require('./recipe-classifiers/helpers');
-const { getClassifiedRecipe } = require('./recipe-classifiers');
-const { getRecipeDiff } = require('./compareRecipes');
+const { canonicalScores } = require('./canonicals');
+const { getScores, getClassifiedRecipe } = require('./compareRecipes');
 
-// close recipes
-const userRecipe =
-	'50 bread flour 15 ap flour 25 whole wheat flour 10 rye flour 85 water 20 levain 2 salt';
-const canonicalRecipe =
-	'35 bread flour 30 ap flour 25 whole wheat flour 10 rye flour 80 water 15 levain 2.5 salt';
+const getUserScores = userInput => {
+	return getScores(getClassifiedRecipe(userInput));
+};
 
-const userIngredientList = getIngredientList(userRecipe);
-const canonicalIngredientList = getIngredientList(canonicalRecipe);
-// console.log('userIngredientList:\n', userIngredientList);
-// console.log('canonicalIngredientList:\n', canonicalIngredientList);
+const getPercentDifference = (a, b) => {
+	const pH = +(Math.abs((a.pH - b.pH) / b.pH) * 100).toFixed(2);
+	const yeastMotility = +(
+		Math.abs((a.yeastMotility - b.yeastMotility) / b.yeastMotility) * 100
+	).toFixed(2);
+	const yeastConcentration = +(Math.abs((a.pH - b.pH) / b.pH) * 100).toFixed(
+		2
+	);
+	return {
+		pH: pH,
+		yeastMotility: yeastMotility,
+		yeastConcentration: yeastConcentration,
+	};
+};
 
-const userClassifiedRecipe = getClassifiedRecipe(userIngredientList);
-const canonicalClassifiedRecipe = getClassifiedRecipe(canonicalIngredientList);
+const findClosestMatch = userRecipe => {
+	let bestPercentDifference = {
+			pHDiff: 100,
+			yeastMotilityDiff: 100,
+			yeastConcentrationDiff: 100,
+		},
+		bestSum = 300,
+		closestMatch;
 
-// console.log('userClassifiedRecipe:\n', userClassifiedRecipe);
-// console.log('canonicalClassifiedRecipe:\n', canonicalClassifiedRecipe);
+	// loop the canonical recipe scores
+	// get the absolute percent difference
+	// compare its sum to sum of best percent difference
+	// if smaller replace bestPercentDifference and bestSum
+	// and save recipe name as closestMatch for accessing
+	for (recipe in canonicalScores) {
+		const userScores = getUserScores(userRecipe);
+		const percentDifference = getPercentDifference(
+			userScores,
+			canonicalScores[recipe]
+		);
 
-const diff = getRecipeDiff(userIngredientList, canonicalIngredientList);
-console.log('diff:\n', diff);
+		console.log(userScores, percentDifference);
 
-// far apart recipes
-const user2 =
-	'250 bread flour 150 ww 100 rye 400 water 75 levain 15 poolish 13 salt 4 fresh yeast';
-const canonical2 =
-	'60 bread flour 20 ap flour 15 ww 5 rye 88 water 10 levain 10 poolish 2.5 salt .33 fresh yeast';
+		const currentSum = (() => {
+			let res = 0;
+			for (score in percentDifference) {
+				res += percentDifference[score];
+			}
+			return res;
+		})();
 
-console.log(
-	Object.entries(getClassifiedRecipe(getIngredientList(user2))).map(arr =>
-		JSON.stringify(arr)
-	)
-);
-console.dir(getClassifiedRecipe(getIngredientList(canonical2)));
-
-const diff2 = getRecipeDiff(
-	getIngredientList(user2),
-	getIngredientList(canonical2)
-);
-console.log('diff2:\n', diff2);
-/*
-	diff2:
-	{
-		pH: 0,
-		yeastMotility: -25.975000000000023,
-		yeastConcentration: -0.5899999999999999
+		if (currentSum < bestSum) {
+			closestMatch = recipe;
+			bestSum = currentSum;
+			bestPercentDifference = percentDifference;
+		}
 	}
-*/
 
-// identical recipes
-const ident = '100 flour 80 water 2.5 salt 1 yeast';
-const diffIdent = getRecipeDiff(
-	getIngredientList(ident),
-	getIngredientList(ident)
-);
-console.log('diffIdent:\n', diffIdent);
+	// use the closestMatch to access the
+	// best matched recipe on canonicals' module.exports
+	return console.log(
+		`closest matched recipe is ${closestMatch}:`,
+		require('./canonicals')[closestMatch]
+	);
+};
+
+// tests work!
+const dummyBaguette =
+	'100 flour 80 water 12 levain 5 poolish 2.25 salt .33 yeast';
+findClosestMatch(dummyBaguette); // returns wholeWheat
+
+const dummyBrioche =
+	'50 ap flour 50 bread flour 35 milk 40 butter 10 sugar 3 fresh yeast 4 salt 12 whole egg';
+findClosestMatch(dummyBrioche);
+
+const dummyRye = '50 bread flour 10 ap 40 rye 80 water 15 levain 2.2 salt';
+findClosestMatch(dummyRye);
+
+const dummyBagel =
+	'100 flour 45 water 30 poolish 7 diastatic malt 8 sugar 3 salt 2 yeast';
+findClosestMatch(dummyBagel);
+
+// in react, map these to a button dialogue:
 /*
-	diffIdent:
-	{ pH: 0, yeastMotility: 0, yeastConcentration: 0 }
+	return (
+		<div>
+			<div>Which recipe matches yours best?</div>
+			canonicalMatches.map(recipe =>
+				(
+					<button
+						type='button'
+						onClick={chooseRecipe()}
+					>{recipe.name}</button>
+				)
+			);
+		</div>
+	);
 */
 
-const { breads } = require('./canonicals');
-const { getRecipeString } = breads;
-
-for (recipe in breads) {
-	if (recipe instanceof Function) continue;
-	console.log(getRecipeString(recipe));
-}
+module.exports = { findClosestMatch };
