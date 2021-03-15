@@ -1,8 +1,19 @@
-const { canonicalScores } = require('./canonicals');
+const { canonicalScores, getRecipeString, baguette } = require('./canonicals');
 const { getScores, getClassifiedRecipe } = require('./compareRecipes');
 
 const getUserScores = userInput => {
 	return getScores(getClassifiedRecipe(userInput));
+};
+
+// utility func, will return a recipe string and scores
+// used to test new canonical formulas
+const getStringAndScores = recipe => {
+	const recipeString = getRecipeString(recipe);
+	const recipeScores = getUserScores(recipeString);
+	return {
+		string: recipeString,
+		scores: recipeScores,
+	};
 };
 
 const getPercentDifference = (a, b) => {
@@ -34,14 +45,17 @@ const findClosestMatch = userRecipe => {
 	// compare its sum to sum of best percent difference
 	// if smaller replace bestPercentDifference and bestSum
 	// and save recipe name as closestMatch for accessing
+	let wasLogged;
 	for (recipe in canonicalScores) {
 		const userScores = getUserScores(userRecipe);
+
+		if (!wasLogged) console.log('userScores is: ', userScores);
+		wasLogged = true;
+
 		const percentDifference = getPercentDifference(
 			userScores,
 			canonicalScores[recipe]
 		);
-
-		console.log(userScores, percentDifference);
 
 		const currentSum = (() => {
 			let res = 0;
@@ -60,26 +74,29 @@ const findClosestMatch = userRecipe => {
 
 	// use the closestMatch to access the
 	// best matched recipe on canonicals' module.exports
-	return console.log(
-		`closest matched recipe is ${closestMatch}:`,
-		require('./canonicals')[closestMatch]
-	);
+	const matchedRecipe = require('./canonicals')[closestMatch];
+	console.log(`closest matched recipe is ${closestMatch}`, matchedRecipe);
+	return matchedRecipe;
 };
 
 // tests work!
 const dummyBaguette =
-	'100 flour 80 water 12 levain 5 poolish 2.25 salt .33 yeast';
-findClosestMatch(dummyBaguette); // returns wholeWheat
+	'65 bread flour 30 ap flour 5 ww 82.5 water 25 levain 15 poolish 2.25 salt .75 yeast';
+console.log('dummy baguette > ');
+findClosestMatch(dummyBaguette);
 
 const dummyBrioche =
 	'50 ap flour 50 bread flour 35 milk 40 butter 10 sugar 3 fresh yeast 4 salt 12 whole egg';
+console.log('dummy brioche > ');
 findClosestMatch(dummyBrioche);
 
 const dummyRye = '50 bread flour 10 ap 40 rye 80 water 15 levain 2.2 salt';
+console.log('dummy rye > ');
 findClosestMatch(dummyRye);
 
 const dummyBagel =
 	'100 flour 45 water 30 poolish 7 diastatic malt 8 sugar 3 salt 2 yeast';
+console.log('dummy bagel > ');
 findClosestMatch(dummyBagel);
 
 // in react, map these to a button dialogue:

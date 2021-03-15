@@ -1,4 +1,4 @@
-const biga12Hr = require('./biga12hr');
+const biga12Hr = require('./biga12Hr');
 const biga24Hr = require('./biga24Hr');
 const levain12Hr = require('./levain12Hr');
 const levain24Hr = require('./levain24Hr');

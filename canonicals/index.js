@@ -13,6 +13,7 @@ const pretzel = require('./pretzel');
 const bagel = require('./bagel');
 const challah = require('./challah');
 const cinnamonPotato = require('./cinnamonPotato');
+const baguette = require('./baguette');
 const generic = require('./generic');
 
 const getRecipeString = recipe => {
@@ -57,6 +58,8 @@ const recipeStrings = {
 		'65 bread flour 35 ap 33 water 7.4 oil 1.9 salt 3.33 fresh yeast 7.8 sugar 18.3 whole egg 8.7 yolk',
 	cinnamonPotato:
 		'90 ap 10 whole wheat 8 milk powder 45 water 2 salt 7 fresh yeast 20 cinnamon sugar 15 butter 40 mashed potato',
+	baguette:
+		'70 bread flour 25 ap flour 5 whole wheat flour 0.25 diastatic malt powder 82.5 water 2 salt 0.75 fresh yeast 20 levain 10 poolish',
 };
 
 const canonicalScores = {
@@ -79,6 +82,7 @@ const canonicalScores = {
 	bagel: { pH: 200, yeastMotility: 186.7, yeastConcentration: 4.25 },
 	challah: { pH: 200, yeastMotility: 150.95, yeastConcentration: 13.65 },
 	cinnamonPotato: { pH: 200, yeastMotility: 214, yeastConcentration: 35 },
+	baguette: { pH: 200, yeastMotility: 297.5, yeastConcentration: 0 },
 };
 
 module.exports = {
@@ -97,6 +101,7 @@ module.exports = {
 	bagel,
 	challah,
 	cinnamonPotato,
+	baguette,
 	generic,
 	recipeStrings,
 	canonicalScores,
