@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { canonicalScores, getRecipeString, baguette } = require('./canonicals');
 const { getScores, getClassifiedRecipe } = require('./compareRecipes');
 
@@ -49,8 +50,8 @@ const findClosestMatch = userRecipe => {
 	for (recipe in canonicalScores) {
 		const userScores = getUserScores(userRecipe);
 
-		if (!wasLogged) console.log('userScores is: ', userScores);
-		wasLogged = true;
+		// if (!wasLogged) console.log('userScores is: ', userScores);
+		// wasLogged = true;
 
 		const percentDifference = getPercentDifference(
 			userScores,
@@ -75,45 +76,55 @@ const findClosestMatch = userRecipe => {
 	// use the closestMatch to access the
 	// best matched recipe on canonicals' module.exports
 	const matchedRecipe = require('./canonicals')[closestMatch];
-	console.log(`closest matched recipe is ${closestMatch}`, matchedRecipe);
-	return matchedRecipe;
+	// console.log(`closest matched recipe is ${closestMatch}`, matchedRecipe);
+	return { name: closestMatch, recipe: matchedRecipe };
 };
 
 // tests work!
 const dummyBaguette =
 	'65 bread flour 30 ap flour 5 ww 82.5 water 25 levain 15 poolish 2.25 salt .75 yeast';
-console.log('dummy baguette > ');
+// console.log('dummy baguette > ');
 findClosestMatch(dummyBaguette);
 
 const dummyBrioche =
 	'50 ap flour 50 bread flour 35 milk 40 butter 10 sugar 3 fresh yeast 4 salt 12 whole egg';
-console.log('dummy brioche > ');
+// console.log('dummy brioche > ');
 findClosestMatch(dummyBrioche);
 
 const dummyRye = '50 bread flour 10 ap 40 rye 80 water 15 levain 2.2 salt';
-console.log('dummy rye > ');
+// console.log('dummy rye > ');
 findClosestMatch(dummyRye);
 
 const dummyBagel =
 	'100 flour 45 water 30 poolish 7 diastatic malt 8 sugar 3 salt 2 yeast';
-console.log('dummy bagel > ');
+// console.log('dummy bagel > ');
 findClosestMatch(dummyBagel);
 
-// in react, map these to a button dialogue:
-/*
-	return (
-		<div>
-			<div>Which recipe matches yours best?</div>
-			canonicalMatches.map(recipe =>
-				(
-					<button
-						type='button'
-						onClick={chooseRecipe()}
-					>{recipe.name}</button>
-				)
-			);
-		</div>
-	);
-*/
+let wasCleared;
 
-module.exports = { findClosestMatch };
+const app = () => {
+	if (!wasCleared) {
+		console.clear();
+		wasCleared = true;
+	}
+
+	process.stdout.write(
+		`\n    hi! i'm a ${chalk.green('recipe classifier')}
+		 \n    i accept recipe strings and return a likely match.
+		 \n\nplease enter a recipe > `
+	);
+
+	process.stdin.on('readable', () => {
+		const closestMatch = findClosestMatch(String(process.stdin.read()));
+		const message = `\n${chalk.green(
+			'match found!'
+		)}\nyour recipe most closely resembles: ${chalk.green(
+			closestMatch.name
+		)}`;
+		console.log(message, closestMatch.recipe);
+	});
+};
+
+app();
+
+module.exports = app;
