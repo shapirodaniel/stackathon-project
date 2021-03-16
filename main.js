@@ -33,26 +33,17 @@ const getPercentDifference = (a, b) => {
 };
 
 const findClosestMatch = userRecipe => {
-	let bestPercentDifference = {
-			pHDiff: 100,
-			yeastMotilityDiff: 100,
-			yeastConcentrationDiff: 100,
-		},
-		bestSum = 300,
+	let bestSum = 300,
 		closestMatch;
+
+	const userScores = getUserScores(userRecipe);
 
 	// loop the canonical recipe scores
 	// get the absolute percent difference
 	// compare its sum to sum of best percent difference
 	// if smaller replace bestPercentDifference and bestSum
 	// and save recipe name as closestMatch for accessing
-	let wasLogged;
 	for (recipe in canonicalScores) {
-		const userScores = getUserScores(userRecipe);
-
-		// if (!wasLogged) console.log('userScores is: ', userScores);
-		// wasLogged = true;
-
 		const percentDifference = getPercentDifference(
 			userScores,
 			canonicalScores[recipe]
@@ -69,37 +60,38 @@ const findClosestMatch = userRecipe => {
 		if (currentSum < bestSum) {
 			closestMatch = recipe;
 			bestSum = currentSum;
-			bestPercentDifference = percentDifference;
 		}
 	}
 
 	// use the closestMatch to access the
 	// best matched recipe on canonicals' module.exports
 	const matchedRecipe = require('./canonicals')[closestMatch];
-	// console.log(`closest matched recipe is ${closestMatch}`, matchedRecipe);
 	return { name: closestMatch, recipe: matchedRecipe };
 };
 
-// tests work!
 const dummyBaguette =
 	'65 bread flour 30 ap flour 5 ww 82.5 water 25 levain 15 poolish 2.25 salt .75 yeast';
-// console.log('dummy baguette > ');
-findClosestMatch(dummyBaguette);
-
 const dummyBrioche =
 	'50 ap flour 50 bread flour 35 milk 40 butter 10 sugar 3 fresh yeast 4 salt 12 whole egg';
-// console.log('dummy brioche > ');
-findClosestMatch(dummyBrioche);
-
 const dummyRye = '50 bread flour 10 ap 40 rye 80 water 15 levain 2.2 salt';
-// console.log('dummy rye > ');
-findClosestMatch(dummyRye);
-
 const dummyBagel =
 	'100 flour 45 water 30 poolish 7 diastatic malt 8 sugar 3 salt 2 yeast';
-// console.log('dummy bagel > ');
-findClosestMatch(dummyBagel);
 
+const testRecipeArray = [dummyBaguette, dummyBrioche, dummyRye, dummyBagel];
+
+const testRecipes = recipeArray => {
+	recipeArray.forEach(recipe => {
+		const match = findClosestMatch(recipe);
+		console.log(
+			`\nyour recipe: ${chalk.yellow(
+				recipe
+			)}\nclosest matched recipe is: ${chalk.green(match.name)}\n`,
+			match.recipe
+		);
+	});
+};
+
+// allows us to clear the console once
 let wasCleared;
 
 const app = () => {
@@ -107,6 +99,9 @@ const app = () => {
 		console.clear();
 		wasCleared = true;
 	}
+
+	console.log('test recipes:\n\n');
+	testRecipes(testRecipeArray);
 
 	process.stdout.write(
 		`\n    hi! i'm a ${chalk.green('recipe classifier')}
@@ -127,4 +122,4 @@ const app = () => {
 
 app();
 
-module.exports = app;
+module.exports = { app, findClosestMatch };

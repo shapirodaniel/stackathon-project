@@ -9,14 +9,16 @@ const natural = require('natural');
 const ingredientClassifier = new natural.BayesClassifier();
 
 // require the corpuses that will be used to train the classifier
-const { allEggTrainingData } = require('./training-data');
-const { allFlourTrainingData } = require('./training-data');
-const { allInclusionCorpus } = require('./training-data');
-const { allLiquidTrainingData } = require('./training-data');
-const { allSweetenerTrainingData } = require('./training-data');
-const { allYeastTrainingData } = require('./training-data');
-const { allSaltTrainingData } = require('./training-data');
-const { allPrefermentTrainingData } = require('./training-data');
+const {
+	allEggTrainingData,
+	allFlourTrainingData,
+	allInclusionCorpus,
+	allLiquidTrainingData,
+	allSweetenerTrainingData,
+	allYeastTrainingData,
+	allSaltTrainingData,
+	allPrefermentTrainingData,
+} = require('./training-data');
 
 // add docs
 ingredientClassifier.addDocument(allEggTrainingData, 'egg');

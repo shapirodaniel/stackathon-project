@@ -36,7 +36,7 @@ const getpHImpact = ingredientClass => {
 		case 'hi extraction':
 			return 1.5;
 		case 'dairy':
-			return 0.5;
+			return 0.25;
 		case 'dried fruit' || 'dried produce':
 			return 1.5;
 		case 'seed' || 'nut':

@@ -41,7 +41,8 @@ const classifyRecipe = ingredientList => {
 			? (ingredient.subclasses = [subclass])
 			: ingredient.subclasses.push(subclass);
 
-		// either add the ingredient to the class array on the classifiedRecipe object or, if the class doesn't yet exist, add a new key with a value of [ {...ingredient} ]
+		// either add the ingredient to the class array on the classifiedRecipe object
+		// or, if the class doesn't yet exist, add a new key with a value of [ {...ingredient} ]
 		classifiedRecipe[ingredientClass]
 			? classifiedRecipe[ingredientClass].push(ingredient)
 			: (classifiedRecipe[ingredientClass] = [ingredient]);
@@ -54,7 +55,6 @@ const classifyRecipe = ingredientList => {
 /* ---- convert to baker's math after classifying recipe ---- */
 ////////////////////////////////////////////////////////////////
 
-// first, convert weights to bp
 const convertToBakersMath = classifiedRecipe => {
 	// get total flour weight
 	const totalFlour = classifiedRecipe.flour.reduce(
