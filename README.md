@@ -4,6 +4,8 @@
 
 # topic: nlp-based ai for generating bakery production schedules according to recipe builds
 
+## Watch the demo here: [An NLP-based Recipe Classifier](https://www.youtube.com/watch?v=gGb3Wp1s33w&ab_channel=dasha)
+
 ### in a nutshell:
 
 -this system brings agile methodology to the kitchen to solve the age-old problem of how to minimize labor and maximize output while holding production quality steady WITHOUT overstressing labor -- these are THE key performance indicators for the likely success of a bakery
